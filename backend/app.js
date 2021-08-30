@@ -10,11 +10,13 @@ app.use(morgan("dev"));
 
 // import all routes
 const products = require("./routes/product");
+const authroute = require("./routes/auth")
 
 // routing
 app.use("/api/v1", products);
+app.use("/api/v1", authroute)
 
-// error middleware is being used in last after routing, else not getting applied.
+// error middleware is being used in last after routing, else not working.
 app.use(errorMiddleware);
 
 module.exports = app;
