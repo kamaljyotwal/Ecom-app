@@ -12,7 +12,7 @@ const seederFunc = async () => {
     console.log("deleted");
     await productSchema.insertMany(productData);
     console.log("added");
-    process.exit();
+    process.exit(0);
   } catch (error) {
     console.log(error);
     process.exit();

@@ -32,7 +32,6 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
 // find & get one product => api/v1/products/:id
 exports.getOneProduct = catchAsyncErrors(async (req, res, next) => {
   const dataFound = await productSchema.findById(req.params.id);
-
   if (!dataFound) {
     return next(new ErrorHandler("product is not found in db", 404));
   }

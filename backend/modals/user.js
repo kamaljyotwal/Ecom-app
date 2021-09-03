@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require("bcryptjs")
+const jwt = require('jsonwebtoken')
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -34,7 +35,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "user"
     },
-
     // below fields will be used when we add functionality when user forget password etc.
     resetPasswordToken: String,
     resetPasswordExpire: Date
@@ -42,14 +42,22 @@ const userSchema = new mongoose.Schema({
     { timestamps: true }
 )
 
+// hashing pass before saving with pre middleware
 userSchema.pre('save', async function (next) {
     if (!this.isModified("password")) {
         next()
     }
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
+    next();
 })
 
-
+// method to return JWT
+userSchema.methods.getJWToken = function () {
+    // console.log(process.env.JWT_SECRET)
+    return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRATION
+    });
+}
 
 module.exports = mongoose.model("users", userSchema)

@@ -32,8 +32,7 @@ class APIFeatures {
         const skip = resPerPage * (currentPage - 1)
         this.query = this.query.limit(resPerPage).skip(skip)
         return this;
-
     }
-
 }
+
 module.exports = APIFeatures
