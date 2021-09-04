@@ -57,7 +57,7 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
 });
 
 // delete product => api/v1/admin/products/:id
-exports.deleteProduct = catchAsyncErrors(async (req, res) => {
+exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
   const found = await productSchema.findByIdAndDelete(req.params.id);
   if (!found) {
     return next(new ErrorHandler("product is not found in db", 404));

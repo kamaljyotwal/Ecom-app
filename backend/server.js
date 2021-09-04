@@ -1,5 +1,5 @@
 const app = require("./app");
-require("dotenv").config({ path: "backend/config/config.env" });
+require("dotenv").config({ path: "backend/config/conf.env" });
 const connectDb = require("./config/db");
 
 // connecting to db

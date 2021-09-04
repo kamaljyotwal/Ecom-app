@@ -11,7 +11,7 @@ const {
 const { isUserAuthenticated } = require("../middlewares/isAuthehticated")
 
 
-router.route("/products").get(isUserAuthenticated, getProducts);
+router.route("/products").get(getProducts);
 router.route("/products/:id").get(getOneProduct);
 router.route("/admin/products/new").post(newProducts);
 router.route("/admin/products/:id").put(updateProduct);
