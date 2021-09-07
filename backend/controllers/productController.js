@@ -1,11 +1,12 @@
 const productSchema = require("../modals/product");
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
-const APIFeatures = require("../utils/apiFeatures")
-
+const APIFeatures = require("../utils/apiFeatures");
 
 // create new product => api/v1/admin/products/new
 exports.newProducts = catchAsyncErrors(async (req, res, next) => {
+  // req object also send user prop which contains data of signed in user so we are accesing that and assigning its _id property to poster so we don't need to provide it via postman/frontend
+  req.body.poster = req.user._id;
   const prod = await productSchema.create(req.body);
   res.status(201).json({
     success: true,
@@ -15,9 +16,11 @@ exports.newProducts = catchAsyncErrors(async (req, res, next) => {
 
 // get all products in db =>api/v1/products
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
-
   const resPerPage = 3;
-  const api3 = new APIFeatures(productSchema.find(), req.query).search().filter().pagination(resPerPage)
+  const api3 = new APIFeatures(productSchema.find(), req.query)
+    .search()
+    .filter()
+    .pagination(resPerPage);
   // const alldata = await productSchema.find();
   const alldata = await api3.query;
 
@@ -27,7 +30,6 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
     data: alldata,
   });
 });
-
 
 // find & get one product => api/v1/products/:id
 exports.getOneProduct = catchAsyncErrors(async (req, res, next) => {
