@@ -24,7 +24,7 @@ exports.isUserAuthenticated = catchAsyncErrors(async (req, res, next) => {
 exports.checkRole = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      return next(new ErrorHandler("Only admins can add/change products", 403));
+      return next(new ErrorHandler("Only admins can access this page", 403));
     }
     next();
   };
