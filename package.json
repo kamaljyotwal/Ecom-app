@@ -8,7 +8,9 @@
     "start": "node backend/server.js",
     "dev": "SET NODE_ENV=DEVELOPMENT& nodemon backend/server.js",
     "prod": "SET NODE_ENV=PRODUCTION& nodemon backend/server.js",
-    "seed": "node backend/utils/seeder.js"
+    "seed": "node backend/utils/seeder.js",
+    "frontend": "npm start --prefix frontend",
+    "both": "concurrently \"npm run dev\" \"npm run frontend\""
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,7 @@
   "homepage": "https://github.com/kamaljyotwal/Ecom-app#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "concurrently": "^6.2.1",
     "cookie-parser": "^1.4.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
