@@ -22,13 +22,13 @@ export const productsReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       };
+
     case PC.CLEAR_ERRORS:
       return {
         ...state,
         error: null,
       };
 
-    default:
-      return state;
+    default: return state;
   }
 };
