@@ -2,6 +2,7 @@ import Home from "./COMPONENTS/Home";
 import Footer from "./COMPONENTS/layouts/Footer";
 import Header from "./COMPONENTS/layouts/Header";
 import { BrowserRouter, Route } from "react-router-dom";
+import Productpage from "./COMPONENTS/ProductDetails";
 
 function App() {
   return (
@@ -13,6 +14,10 @@ function App() {
           {/* home route */}
           <Route path="/" exact>
             <Home />
+          </Route>
+          {/* product page */}
+          <Route path="/product/:productId" exact>
+            <Productpage />
           </Route>
         </div>
 

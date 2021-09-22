@@ -5,7 +5,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 html,
 body {
   font-family: "Amazon Ember";
@@ -14,10 +13,6 @@ body {
   margin: 0px;
   padding: 0px;
   overflow-x: hidden;
-}
-
-.homeDiv {
-  border: 2px solid red;
 }
 
 /* Scroll Bar */
@@ -30,6 +25,35 @@ body {
   background-color: #f5f5f5;
 }
 
+/* product page redoing layout */
+.product-mainDiv {
+  /* border: 3px solid red; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.left-part {
+  /* border: 2px solid blue; */
+  height: 100%;
+  width: 45% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15% !important;
+  box-shadow: 0 0 2px 2px 5px #eee;
+}
+.left-part img {
+  object-fit: contain;
+  overflow: hidden;
+  height: auto;
+  max-height: 100vh;
+}
+.right-part {
+  margin-top: 2rem;
+  /* border: 2px solid green; */
+  height: 100%;
+  width: 50% !important;
+}
 ::-webkit-scrollbar-thumb {
   background-color: rgba(66, 66, 66, 0.2);
   border: 0px;
@@ -130,7 +154,6 @@ footer {
   color: grey;
   bottom: 0;
   width: 100%;
-  border: 1px solid blue;
 }
 
 /* Ratings */
@@ -198,9 +221,9 @@ footer {
   color: green;
 }
 
-#product_image {
+/* #product_image {
   margin-top: 9rem;
-}
+} */
 
 /* Loader */
 .loader {

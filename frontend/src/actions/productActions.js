@@ -1,17 +1,29 @@
-import {
-  ALL_PRODUCTS_REQUEST,
-  ALL_PRODUCTS_FAIL,
-  ALL_PRODUCTS_SUCCESS,
-} from "../constants/productConstants";
+import * as PC from "../constants/productConstants";
 import axios from "axios";
 
 export const getProductsAction = () => async (dispatch) => {
   try {
-    dispatch({ type: ALL_PRODUCTS_REQUEST });
+    dispatch({ type: PC.ALL_PRODUCTS_REQUEST });
     const { data } = await axios.get("/api/v1/products");
 
-    dispatch({ type: ALL_PRODUCTS_SUCCESS, payload: data });
+    dispatch({ type: PC.ALL_PRODUCTS_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: ALL_PRODUCTS_FAIL, payload: error.message });
+    dispatch({ type: PC.ALL_PRODUCTS_FAIL, payload: error });
   }
 };
+
+export const getProductDetailsAction = (productId) => async (dispatch) => {
+  try {
+    dispatch({ type: PC.PRODUCT_DETAILS_REQUEST });
+    const { data } = await axios.get(`/api/v1/product/${productId}`);
+    // console.log(message);
+    dispatch({ type: PC.PRODUCT_DETAILS_SUCCESS, payload: data.data });
+  } catch (error) {
+    dispatch({ type: PC.PRODUCT_DETAILS_FAIL, payload: error.message });
+  }
+};
+
+// // Clear Errors
+// export const clearErrors = () => async (dispatch) => {
+//   dispatch({ type: PC.CLEAR_ERRORS });
+// };

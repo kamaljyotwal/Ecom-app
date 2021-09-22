@@ -1,13 +1,16 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 export default function Header() {
   return (
     <>
       <nav className="navbar row">
         <div className="col-12 col-md-3 child1">
-          <div className="navbar-brand">
-            <img src="./images/logo.png" alt="Logo" />
-          </div>
+          <NavLink to="/">
+            <div className="navbar-brand">
+              <img src={"/images/logo.png"} alt="Logo" />
+            </div>
+          </NavLink>
         </div>
 
         <div className="col-12 col-md-6 mt-2 mt-md-0">
@@ -42,3 +45,5 @@ export default function Header() {
     </>
   );
 }
+// C:\Users\kamal jyotwal\Desktop\Ecom-app\frontend\public\images\logo.png
+// frontend\public\images\logo.png

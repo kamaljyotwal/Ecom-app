@@ -29,6 +29,33 @@ export const productsReducer = (state = initialState, action) => {
         error: null,
       };
 
-    default: return state;
+    default:
+      return state;
+  }
+};
+
+export const productDetailsReducer = (state = { product: {} }, action) => {
+  switch (action.type) {
+    case PC.PRODUCT_DETAILS_REQUEST:
+      return { ...state, loading: true };
+
+    case PC.PRODUCT_DETAILS_SUCCESS:
+      return {
+        loading: false,
+        product: action.payload,
+      };
+
+    case PC.PRODUCT_DETAILS_FAIL:
+      return { ...state, loading: false, error: action.payload  };
+
+    case PC.CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+        
+      };
+
+    default:
+      return state;
   }
 };
