@@ -1,14 +1,14 @@
 import * as PC from "../constants/productConstants";
 import axios from "axios";
 
-export const getProductsAction = () => async (dispatch) => {
+export const getProductsAction = (currentPg) => async (dispatch) => {
   try {
     dispatch({ type: PC.ALL_PRODUCTS_REQUEST });
-    const { data } = await axios.get("/api/v1/products");
+    const { data } = await axios.get(`/api/v1/products?page=${currentPg}`);
 
     dispatch({ type: PC.ALL_PRODUCTS_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: PC.ALL_PRODUCTS_FAIL, payload: error });
+    dispatch({ type: PC.ALL_PRODUCTS_FAIL, payload: error.message });
   }
 };
 

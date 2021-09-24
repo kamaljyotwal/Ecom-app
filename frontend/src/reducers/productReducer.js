@@ -13,8 +13,9 @@ export const productsReducer = (state = initialState, action) => {
     case PC.ALL_PRODUCTS_SUCCESS:
       return {
         loading: false,
+        allProductsCount: action.payload.allProductsCount,
+        resPerPage: action.payload.resPerPage,
         products: action.payload.data,
-        productsCount: action.payload.length,
       };
 
     case PC.ALL_PRODUCTS_FAIL:
@@ -46,13 +47,12 @@ export const productDetailsReducer = (state = { product: {} }, action) => {
       };
 
     case PC.PRODUCT_DETAILS_FAIL:
-      return { ...state, loading: false, error: action.payload  };
+      return { ...state, loading: false, error: action.payload };
 
     case PC.CLEAR_ERRORS:
       return {
         ...state,
         error: null,
-        
       };
 
     default:
