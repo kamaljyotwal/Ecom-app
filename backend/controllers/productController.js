@@ -23,7 +23,7 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
     .pagination(resPerPage);
   // const alldata = await productSchema.find();
   const alldata = await api3.query;
-  const allProductsCount = await productSchema.count();
+  const allProductsCount = await productSchema.countDocuments();
 
   if (alldata.length === 0) {
     return next(new ErrorHandler("internal server error", 500));
@@ -31,8 +31,9 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({
     sucess: true,
-    resPerPage,
+    productsCount: alldata.length,
     allProductsCount,
+    resPerPage,
     data: alldata,
   });
 });

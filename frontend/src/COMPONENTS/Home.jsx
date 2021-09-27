@@ -6,22 +6,24 @@ import ProductCard from "./ProductCard";
 import Loader from "./Loader";
 import Pagination from "react-js-pagination";
 import { useAlert } from "react-alert";
+import { useParams } from "react-router-dom";
 
 export default function Home() {
   const dispatch = useDispatch();
   const alert = useAlert();
+  let { keyword } = useParams();
 
   const { loading, products, error, resPerPage, allProductsCount } = useSelector(
     (state) => state.products2
   );
-  console.log(error);
+
   // local state
   const [currentPg, setCurrentPg] = useState(1);
 
   useEffect(() => {
-    dispatch(getProductsAction(currentPg));
+    dispatch(getProductsAction(currentPg, keyword));
     // eslint-disable-next-line
-  }, [currentPg]);
+  }, [currentPg, keyword]);
 
   useEffect(() => {
     if (error) {
@@ -55,7 +57,7 @@ export default function Home() {
                 ))}
             </div>
           </section>
-          
+
           {/* conditionally render pagination*/}
           {allProductsCount >= resPerPage && (
             <div className="d-flex justify-content-center mt-5">
