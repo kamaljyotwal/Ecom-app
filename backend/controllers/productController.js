@@ -14,7 +14,7 @@ exports.newProducts = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// get all products in db =>api/v1/products
+// get all products in db =>api/v1/products || api/v1/products?keyword=apple&page=1&price[lte]=200&price[gte]=100
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
   const resPerPage = 4;
   const api3 = new APIFeatures(productSchema.find(), req.query)
