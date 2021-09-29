@@ -13,6 +13,7 @@ export const productsReducer = (state = initialState, action) => {
     case PC.ALL_PRODUCTS_SUCCESS:
       return {
         loading: false,
+        productsCount: action.payload.productsCount,
         allProductsCount: action.payload.allProductsCount,
         resPerPage: action.payload.resPerPage,
         products: action.payload.data,

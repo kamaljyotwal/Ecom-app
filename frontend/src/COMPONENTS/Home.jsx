@@ -15,18 +15,34 @@ export default function Home() {
   const alert = useAlert();
   let { keyword } = useParams();
 
-  const { loading, products, error, resPerPage, allProductsCount } = useSelector(
+  const { loading, products, error, resPerPage, productsCount, allProductsCount } = useSelector(
     (state) => state.products2
   );
 
   // local state
   const [currentPg, setCurrentPg] = useState(1);
   const [price, setPrice] = useState([0, 1000]);
+  const [category, setCategory] = useState("");
+  const [rating, setRating] = useState(0);
+
+  let categoryArr = [
+    "Electronics",
+    "Cameras",
+    "Laptops",
+    "Accessories",
+    "Headphones",
+    "Food",
+    "Books",
+    "Clothes/Shoes",
+    "Beauty/Health",
+    "Sports",
+    "Outdoor",
+    "Home",
+  ];
 
   useEffect(() => {
-    dispatch(getProductsAction(currentPg, keyword, price));
-    // eslint-disable-next-line
-  }, [currentPg, keyword, price]);
+    dispatch(getProductsAction(currentPg, keyword, price, category, rating));
+  }, [currentPg, keyword, price, category, rating]);
 
   useEffect(() => {
     if (error) {
@@ -53,7 +69,7 @@ export default function Home() {
             <div className="row">
               {keyword ? (
                 <>
-                  <div className="col-6 col-md-3 mt-5 mb-5 left-div">
+                  <div className="col-6 col-md-3  mt-4 left-div">
                     <Range
                       marks={{
                         1: `$1`,
@@ -70,43 +86,113 @@ export default function Home() {
                       value={price}
                       onChange={(price) => setPrice(price)}
                     />
+                    <hr className="mt-5 mb-3" />
+
+                    <div>
+                      <h4 className="mb-3">Categories</h4>
+
+                      <ul className="pl-0">
+                        {categoryArr.map((i, index) => (
+                          <li
+                            style={{
+                              cursor: "pointer",
+                              listStyleType: "none",
+                            }}
+                            key={`${i}+${index}`}
+                            onClick={() => setCategory(i)}
+                          >
+                            {i}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <hr my-3 />
+                    <div className="mt-2">
+                      <h4 className="mb-3">Ratings</h4>
+
+                      <ul className="pl-0">
+                        {[5, 4, 3, 2, 1].map((star) => (
+                          <li
+                            style={{
+                              cursor: "pointer",
+                              listStyleType: "none",
+                            }}
+                            key={star}
+                            onClick={() => setRating(star)}
+                          >
+                            <div
+                              className="rating-outer"
+                              style={{
+                                paddingLeft: "5px",
+                                paddingRight: "5px",
+                              }}
+                            >
+                              <div
+                                className="rating-inner"
+                                style={{
+                                  width: `${star * 20}%`,
+
+                                  paddingLeft: "5px",
+                                  paddingRight: "5px",
+                                }}
+                              ></div>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <hr />
                   </div>
-                  <div className="col-6 col-md-3 col-lg-9 right-div">
-                    {products &&
-                      products.map((i) => (
-                        // <div className="col-sm-12 col-md-6 col-lg-3 my-3" key={i._id}>
-                        <div className="col-sm-12 col-md-6 col-lg-4 my-3" key={i._id}>
-                          <ProductCard eachproduct={i} />
-                        </div>
-                      ))}
+                  <div className="col-6 col-md-9">
+                    <div className="row">
+                      {products && products.map((i) => <ProductCard eachproduct={i} col="4" />)}
+                    </div>
                   </div>
                 </>
               ) : (
-                products &&
-                products.map((i) => (
-                  <div className="col-sm-12 col-md-6 col-lg-3 my-3" key={i._id}>
-                    <ProductCard eachproduct={i} />
-                  </div>
-                ))
+                products && products.map((i) => <ProductCard eachproduct={i} col="3" />)
               )}
             </div>
           </section>
 
-          {/* conditionally render pagination*/}
-          {allProductsCount >= resPerPage && (
-            <div className="d-flex justify-content-center mt-5">
-              <Pagination
-                activePage={currentPg}
-                itemsCountPerPage={resPerPage}
-                totalItemsCount={allProductsCount}
-                pageRangeDisplayed={5}
-                onChange={paginationHandler}
-                nextPageText={"next"}
-                prevPageText={"prev"}
-                itemClass="page-item"
-                linkClass="page-link"
-              />
-            </div>
+          {/* conditionally rendering pagination*/}
+          {keyword ? (
+            <>
+              {productsCount >= resPerPage && (
+                <div className="d-flex justify-content-center mt-5">
+                  <Pagination
+                    activePage={currentPg}
+                    itemsCountPerPage={resPerPage}
+                    totalItemsCount={allProductsCount}
+                    pageRangeDisplayed={5}
+                    onChange={paginationHandler}
+                    nextPageText={"next"}
+                    prevPageText={"prev"}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              {allProductsCount >= resPerPage && (
+                <div className="d-flex justify-content-center mt-5">
+                  <Pagination
+                    activePage={currentPg}
+                    itemsCountPerPage={resPerPage}
+                    totalItemsCount={allProductsCount}
+                    pageRangeDisplayed={5}
+                    onChange={paginationHandler}
+                    nextPageText={"next"}
+                    prevPageText={"prev"}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
+                </div>
+              )}
+            </>
           )}
         </>
       )}

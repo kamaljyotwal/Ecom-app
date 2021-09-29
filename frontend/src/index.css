@@ -24,12 +24,7 @@ body {
   width: 8px;
   background-color: #f5f5f5;
 }
-.left-div {
-  border: 1px solid red;
-}
-.right-div {
-  border: 1px solid blue;
-}
+
 .card {
   box-shadow: 0 0 2px 3px rgb(252, 251, 251);
 }
