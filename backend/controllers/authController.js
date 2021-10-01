@@ -33,7 +33,7 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     .select("+password");
 
   if (!user) {
-    return next(new ErrorHandler("User with this email does not exist", 400));
+    return next(new ErrorHandler("Email doesn't exist or password is incorrect", 400));
   } else if (bcrypt.compareSync(password, user.password) == false) {
     return next(new ErrorHandler("password is incorrect", 400));
   } else {

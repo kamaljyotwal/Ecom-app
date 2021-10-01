@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 
 export default function ProductCard({ eachproduct, col }) {
   return (
-    <div className={`col-6 col-md-3 col-lg-${col} my-3 right-div`} key={eachproduct._id}>
+    <div className={`col-12 col-md-6 col-lg-${col} my-3 right-div`}>
+      {/* < className={`col-6 col-md-3 col-lg-${col} my-3 right-div`} > */}
       <div className="card p-3 rounded">
         <img className="card-img-top mx-auto" src={eachproduct.images[0].url} alt="product" />
         <div className="card-body d-flex flex-column">

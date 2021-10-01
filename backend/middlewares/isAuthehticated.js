@@ -1,4 +1,5 @@
-// check whether user is authenticated
+// this file checks whether user is authenticated
+
 const catchAsyncErrors = require("./catchAsyncErrors");
 const jwt = require("jsonwebtoken");
 const ErrorHandler = require("../utils/errorHandler");

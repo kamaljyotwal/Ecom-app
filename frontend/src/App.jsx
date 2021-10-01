@@ -1,6 +1,7 @@
 import Home from "./COMPONENTS/Home";
 import Footer from "./COMPONENTS/layouts/Footer";
 import Header from "./COMPONENTS/layouts/Header";
+import Login from "./COMPONENTS/user/Login";
 import { BrowserRouter, Route } from "react-router-dom";
 import Productpage from "./COMPONENTS/ProductDetails";
 
@@ -23,6 +24,11 @@ function App() {
           {/* search */}
           <Route path="/search/:keyword">
             <Home />
+          </Route>
+
+          {/* login page */}
+          <Route path="/login" exact>
+            <Login />
           </Route>
         </div>
         <Footer />

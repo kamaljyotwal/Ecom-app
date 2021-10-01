@@ -7,7 +7,8 @@ import Loader from "./Loader";
 import Pagination from "react-js-pagination";
 import { useAlert } from "react-alert";
 import { useParams } from "react-router-dom";
-import Slider, { Range } from "rc-slider";
+// import Slider, { Range } from "rc-slider";
+import { Range } from "rc-slider";
 import "rc-slider/assets/index.css";
 
 export default function Home() {
@@ -42,13 +43,15 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getProductsAction(currentPg, keyword, price, category, rating));
+    // eslint-disable-next-line
   }, [currentPg, keyword, price, category, rating]);
 
   useEffect(() => {
     if (error) {
       alert.error(error);
     }
-  }, [loading]);
+    // eslint-disable-next-line
+  }, [loading, error]);
 
   // pagination handler
   function paginationHandler(pg) {
@@ -106,18 +109,18 @@ export default function Home() {
                         ))}
                       </ul>
                     </div>
-                    <hr my-3 />
+                    <hr className="my-3" />
                     <div className="mt-2">
                       <h4 className="mb-3">Ratings</h4>
 
                       <ul className="pl-0">
-                        {[5, 4, 3, 2, 1].map((star) => (
+                        {[5, 4, 3, 2, 1].map((star, index) => (
                           <li
                             style={{
                               cursor: "pointer",
                               listStyleType: "none",
                             }}
-                            key={star}
+                            key={`${star}+${index}`}
                             onClick={() => setRating(star)}
                           >
                             <div
@@ -146,7 +149,8 @@ export default function Home() {
                   </div>
                   <div className="col-6 col-md-9">
                     <div className="row">
-                      {products && products.map((i) => <ProductCard eachproduct={i} col="4" />)}
+                      {products &&
+                        products.map((i) => <ProductCard eachproduct={i} col="4" key={i._id} />)}
                     </div>
                   </div>
                 </>
