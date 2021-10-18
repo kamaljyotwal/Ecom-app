@@ -1,7 +1,9 @@
 import Home from "./COMPONENTS/Home";
 import Footer from "./COMPONENTS/layouts/Footer";
 import Header from "./COMPONENTS/layouts/Header";
-import Login from "./COMPONENTS/user/Login";
+import Login from "./COMPONENTS/auth/Login";
+import Signup from "./COMPONENTS/auth/Signup";
+
 import { BrowserRouter, Route } from "react-router-dom";
 import Productpage from "./COMPONENTS/ProductDetails";
 
@@ -29,6 +31,11 @@ function App() {
           {/* login page */}
           <Route path="/login" exact>
             <Login />
+          </Route>
+
+          {/* register user page */}
+          <Route path="/register" exact>
+            <Signup />
           </Route>
         </div>
         <Footer />

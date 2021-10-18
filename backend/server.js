@@ -1,11 +1,19 @@
 const app = require("./app");
 require("dotenv").config({ path: "backend/config/conf.env" });
 const connectDb = require("./config/db");
+const cloudinary = require("cloudinary").v2;
 
 // connecting to db
 connectDb();
 
-//handling uncaught exceptions 
+// cloudinary setup
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+//handling uncaught exceptions
 // it is working but unnecessary
 // process.on('uncaughtException', err => {
 //   console.log(`Error: ${err.stack}`);
@@ -26,4 +34,3 @@ const server = app.listen(process.env.PORT, () =>
 //   })
 // })
 // above is not working
-

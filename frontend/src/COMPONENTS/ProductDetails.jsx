@@ -23,7 +23,7 @@ export default function ProductDetails() {
       alert.error(error);
       // dispatch(clearErrors);
     }
-  }, [error]);
+  }, [error, alert]);
 
   return (
     <>

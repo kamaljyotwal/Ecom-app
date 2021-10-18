@@ -5,21 +5,28 @@ const bcrypt = require("bcryptjs");
 const tokenFunc = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
+const cloudinary = require("cloudinary");
 
 // register user => api/v1/register
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   const { name, email, password } = req.body;
+
+  const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+    folder: "avatars",
+    width: 150,
+    crop: "scale",
+  });
 
   const user1 = await userSchema.create({
     name,
     email,
     password,
     avatar: {
-      public_id: "products/61oXGZ60GfL_fixco9",
-      url: "https://res.cloudinary.com/bookit/image/upload/v1614877995/products/61oXGZ60GfL_fixco9.jpg",
+      public_id: result.public_id,
+      url: result.secure_url,
     },
   });
-  // jwt setup in cookie and sending response
+  // jwt setup in cookie and sending to client
   tokenFunc(user1, 201, res);
 });
 

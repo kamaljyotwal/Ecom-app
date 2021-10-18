@@ -3,11 +3,13 @@ const app = express();
 const morgan = require("morgan");
 const errorMiddleware = require("./middlewares/error");
 var cookieParser = require("cookie-parser");
+const fileUpload = require("express-fileupload");
 
 // middlewares
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cookieParser());
+app.use(fileUpload());
 
 // import all routes
 const products = require("./routes/product");

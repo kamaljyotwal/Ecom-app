@@ -155,7 +155,7 @@ export default function Home() {
                   </div>
                 </>
               ) : (
-                products && products.map((i) => <ProductCard eachproduct={i} col="3" />)
+                products && products.map((i) => <ProductCard eachproduct={i} col="3" key={i._id} />)
               )}
             </div>
           </section>

@@ -3,23 +3,26 @@ import * as AC from "../constants/authConstants";
 export const authReducer = (state = { user: {} }, action) => {
   switch (action.type) {
     case AC.LOGIN_REQUEST:
+    case AC.REGISTER_USER_REQUEST:
       return {
         loading: true,
-        isAuthehticated: false,
+        isAuthenticated: false,
       };
 
     case AC.LOGIN_SUCCESS:
+    case AC.REGISTER_USER_SUCCESS:
       return {
         ...state,
         loading: false,
-        isAuthehticated: true,
+        isAuthenticated: true,
         user: action.payload,
       };
 
     case AC.LOGIN_FAIL:
+    case AC.REGISTER_USER_FAIL:
       return {
         loading: false,
-        isAuthehticated: false,
+        isAuthenticated: false,
         user: null,
         error: action.payload,
       };

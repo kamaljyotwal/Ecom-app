@@ -14,7 +14,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
 
-  const { isAuthenticated, loading, user, error } = useSelector((state) => state.user);
+  const { isAuthenticated, loading, error } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -25,7 +25,7 @@ export default function Login() {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [error, loading, isAuthenticated]);
+  }, [error, loading, isAuthenticated, alert, dispatch, history]);
 
   function submitFunc(e) {
     e.preventDefault();
