@@ -1,13 +1,23 @@
+import { useEffect } from "react";
 import Home from "./COMPONENTS/Home";
 import Footer from "./COMPONENTS/layouts/Footer";
 import Header from "./COMPONENTS/layouts/Header";
 import Login from "./COMPONENTS/auth/Login";
 import Signup from "./COMPONENTS/auth/Signup";
+import ProfilePage from "./COMPONENTS/auth/Profile";
+import { loadCurrentUserAction } from "./actions/authAction";
+import { useDispatch } from "react-redux";
 
 import { BrowserRouter, Route } from "react-router-dom";
 import Productpage from "./COMPONENTS/ProductDetails";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadCurrentUserAction());
+  }, [dispatch]);
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -36,6 +46,11 @@ function App() {
           {/* register user page */}
           <Route path="/register" exact>
             <Signup />
+          </Route>
+
+          {/* profile page */}
+          <Route path="/me" exact>
+            <ProfilePage />
           </Route>
         </div>
         <Footer />

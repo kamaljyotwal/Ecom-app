@@ -29,7 +29,7 @@ export default function Signup() {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, history, isAuthenticated, error]);
+  }, [dispatch, history, isAuthenticated, error, alert]);
 
   // form handlers
   const submitFunc = (e) => {

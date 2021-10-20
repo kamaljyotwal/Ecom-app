@@ -4,6 +4,7 @@ export const authReducer = (state = { user: {} }, action) => {
   switch (action.type) {
     case AC.LOGIN_REQUEST:
     case AC.REGISTER_USER_REQUEST:
+    case AC.LOAD_USER_REQUEST:
       return {
         loading: true,
         isAuthenticated: false,
@@ -11,11 +12,19 @@ export const authReducer = (state = { user: {} }, action) => {
 
     case AC.LOGIN_SUCCESS:
     case AC.REGISTER_USER_SUCCESS:
+    case AC.LOAD_USER_SUCCESS:
       return {
         ...state,
         loading: false,
         isAuthenticated: true,
         user: action.payload,
+      };
+
+    case AC.LOAD_USER_FAIL:
+      return {
+        loading: false,
+        isAuthenticated: false,
+        user: null,
       };
 
     case AC.LOGIN_FAIL:
@@ -24,6 +33,19 @@ export const authReducer = (state = { user: {} }, action) => {
         loading: false,
         isAuthenticated: false,
         user: null,
+        error: action.payload,
+      };
+
+    case AC.LOGOUT_SUCCESS:
+      return {
+        loading: false,
+        isAuthenticated: false,
+        user: null,
+      };
+
+    case AC.LOGOUT_FAIL:
+      return {
+        ...state,
         error: action.payload,
       };
 

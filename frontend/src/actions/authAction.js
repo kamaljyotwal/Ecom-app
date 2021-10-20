@@ -35,6 +35,31 @@ export const registerAction = (userData) => async (dispatch) => {
   }
 };
 
+// load current user
+export const loadCurrentUserAction = () => async (dispatch) => {
+  try {
+    dispatch({ type: AC.LOAD_USER_REQUEST });
+
+    const { data } = await axios.get("/api/v1/me");
+
+    dispatch({ type: AC.LOAD_USER_SUCCESS, payload: data.data });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: AC.LOAD_USER_FAIL, payload: error.response.data.message });
+  }
+};
+
+// logout
+export const logoutAction = () => async (dispatch) => {
+  try {
+    await axios.get("/api/v1/logout");
+    dispatch({ type: AC.LOGOUT_SUCCESS });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: AC.LOGOUT_FAIL, payload: error.response.data.message });
+  }
+};
+
 // Clear Errors
 export const clearErrors = () => async (dispatch) => {
   dispatch({
