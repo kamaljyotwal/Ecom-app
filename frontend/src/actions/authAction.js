@@ -60,6 +60,36 @@ export const logoutAction = () => async (dispatch) => {
   }
 };
 
+// update profile action
+export const updateProfileAction = (userData) => async (dispatch) => {
+  try {
+    dispatch({ type: AC.UPDATE_PROFILE_REQUEST });
+
+    const config = { headers: { "Content-Type": "multipart/form-data" } };
+    const { data } = await axios.put("/api/v1/updateProfile", userData, config);
+
+    dispatch({ type: AC.UPDATE_PROFILE_SUCCESS, payload: data.success });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: AC.UPDATE_PROFILE_FAIL, payload: error.response.data.message });
+  }
+};
+
+// update password action
+export const updatePasswordAction = (passwordData) => async (dispatch) => {
+  try {
+    dispatch({ type: AC.UPDATE_PASSWORD_REQUEST });
+
+    const config = { headers: { "Content-Type": "application/json" } };
+    const { data } = await axios.post("/api/v1/password/update", passwordData, config);
+    
+    dispatch({ type: AC.UPDATE_PASSWORD_SUCCESS, payload: data.message });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: AC.UPDATE_PASSWORD_FAIL, payload: error.response.data.message });
+  }
+};
+
 // Clear Errors
 export const clearErrors = () => async (dispatch) => {
   dispatch({

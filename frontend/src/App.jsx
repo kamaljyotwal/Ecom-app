@@ -5,11 +5,15 @@ import Header from "./COMPONENTS/layouts/Header";
 import Login from "./COMPONENTS/auth/Login";
 import Signup from "./COMPONENTS/auth/Signup";
 import ProfilePage from "./COMPONENTS/auth/Profile";
+import UpdateProfile from "./COMPONENTS/user/updateProfile";
+import PasswordUpdate from "./COMPONENTS/user/PasswordUpdate";
 import { loadCurrentUserAction } from "./actions/authAction";
 import { useDispatch } from "react-redux";
+import ProtectedRoute from "./COMPONENTS/route/ProtectedRoute";
 
 import { BrowserRouter, Route } from "react-router-dom";
 import Productpage from "./COMPONENTS/ProductDetails";
+import Dashboard from "./COMPONENTS/auth/Dashboard";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,10 +52,25 @@ function App() {
             <Signup />
           </Route>
 
-          {/* profile page */}
-          <Route path="/me" exact>
+          {/* profile page | protected  */}
+          <ProtectedRoute path="/me" exact>
             <ProfilePage />
-          </Route>
+          </ProtectedRoute>
+
+          {/* dashboard | protected | admin */}
+          <ProtectedRoute path="/dashboard" adminRoute exact>
+            <Dashboard />
+          </ProtectedRoute>
+
+          <ProtectedRoute path="/me/update" exact>
+            <UpdateProfile />
+          </ProtectedRoute>
+
+          <ProtectedRoute path="/password/update" exact>
+            <PasswordUpdate />
+          </ProtectedRoute>
+          
+          {/* <ProtectedRoute path="/me" component={ProfilePage} exact /> */}
         </div>
         <Footer />
       </div>

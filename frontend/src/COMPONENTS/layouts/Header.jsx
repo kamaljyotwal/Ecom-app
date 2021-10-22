@@ -88,7 +88,7 @@ export default function Header() {
               )}
             </>
           )}
-          {isAuthenticated == false ? (
+          {isAuthenticated === false ? (
             <NavLink className="btn" id="login_btn" to="/login">
               Login
             </NavLink>

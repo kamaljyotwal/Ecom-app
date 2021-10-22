@@ -150,7 +150,7 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
   const ismatching = bcrypt.compareSync(oldPassword, user.password);
 
   if (!ismatching) {
-    return next(new ErrorHandler("You entered wrong current password", 406));
+    return next(new ErrorHandler("The old password is incorrect", 406));
   } else if (ismatching) {
     if (newPassword !== confirmPassword) {
       return next(new ErrorHandler("Type the new password correctly", 400));
@@ -160,25 +160,48 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
         new ErrorHandler("Try something diffrent, this is already your current password", 400)
       );
     }
-
+    
     // setting and saving new password
     user.password = newPassword;
     await user.save();
     res.status(200).json({
       success: true,
-      message: "Password updated successfully, login again",
+      message: "Password updated successfully",
     });
   }
 });
 
 // update user details => api/v1/updateProfile
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
-  const newData = await userSchema.findByIdAndUpdate(req.user._id, req.body, {
+  const newUserData = {
+    name: req.body.name,
+    email: req.body.email,
+  };
+
+  // update avatar
+  if (req.body.avatar !== "") {
+    const user = await userSchema.findById(req.user._id);
+    const image_id = user.avatar.public_id;
+    const res = await cloudinary.v2.uploader.destroy(image_id);
+
+    const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+      folder: "avatars",
+      width: 150,
+      crop: "scale",
+    });
+
+    newUserData.avatar = {
+      public_id: result.public_id,
+      url: result.secure_url,
+    };
+  }
+
+  const newData = await userSchema.findByIdAndUpdate(req.user._id, newUserData, {
     new: true,
     useFindAndModify: false,
     runValidators: true,
   });
-  // updating avatar/picture to be done
+
   res.status(201).json({ success: true, data: newData });
 });
 

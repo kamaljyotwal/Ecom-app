@@ -59,3 +59,46 @@ export const authReducer = (state = { user: {} }, action) => {
       return state;
   }
 };
+
+export const userReducer = (state = {}, action) => {
+  switch (action.type) {
+    case AC.UPDATE_PROFILE_REQUEST:
+    case AC.UPDATE_PASSWORD_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case AC.UPDATE_PROFILE_SUCCESS:
+    case AC.UPDATE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isUpdated: action.payload,
+      };
+
+    case AC.UPDATE_PROFILE_FAIL:
+    case AC.UPDATE_PASSWORD_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case AC.UPDATE_PROFILE_RESET:
+    case AC.UPDATE_PASSWORD_RESET:
+      return {
+        ...state,
+        isUpdated: false,
+      };
+
+    case AC.CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
