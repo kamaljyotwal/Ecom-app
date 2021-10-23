@@ -70,25 +70,27 @@ exports.forgotPass = catchAsyncErrors(async (req, res, next) => {
   }
 
   const tkn = user1[0].getResetPasswordtkn();
+
   await user1[0].save({
     validateBeforeSave: false,
   });
-  const address = `${req.protocol}://${req.get("host")}/api/v1/password/reset/${tkn}`;
-
-  const message = `Click the link below to reset your password:\n\n <a>${address}</a>`;
+  // const address = `${req.protocol}://${req.get("host")}/api/v1/password/reset/${tkn}`;
+  const address = `${process.env.FRONTEND_URL}/password/reset/${tkn}`;
+  const message = `Click the link below to reset your password:`;
   const subject = `Password Reset link`;
-
+  
   try {
     const options = {
       email: user1[0].email,
-      text: message,
       subject: subject,
+      message: message,
+      link: address,
     };
 
     await sendEmail(options);
     res.status(200).json({
       success: true,
-      msg: `Email sent to ${user1[0].email}`,
+      message: `Email sent to ${user1[0].email}`,
     });
   } catch (error) {
     user1[0].resetPasswordExpire = undefined;
@@ -101,10 +103,11 @@ exports.forgotPass = catchAsyncErrors(async (req, res, next) => {
 
 // reset password =>api/v1/password/reset/:id
 exports.resetPass = catchAsyncErrors(async (req, res, next) => {
-  const hashed = crypto.createHash("sha256").update(req.params.hashedTkn).digest("hex");
+  const { hashedTkn } = req.params;
 
+  const hashedNew = crypto.createHash("sha256").update(hashedTkn.substr(1)).digest("hex");
   const user = await userSchema.findOne({
-    resetPasswordToken: hashed,
+    resetPasswordToken: hashedNew,
     resetPasswordExpire: {
       $gt: Date.now(),
     },
@@ -113,7 +116,6 @@ exports.resetPass = catchAsyncErrors(async (req, res, next) => {
   if (!user) {
     return next(new ErrorHandler("Either token is invalid or has expired", 403));
   }
-
   if (req.body.password !== req.body.confirmPassword) {
     return next(new ErrorHandler("new password mismatch", 400));
   }
@@ -127,7 +129,7 @@ exports.resetPass = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    msg: "password updated",
+    message: "Password updated successfully",
   });
 });
 
@@ -160,7 +162,7 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
         new ErrorHandler("Try something diffrent, this is already your current password", 400)
       );
     }
-    
+
     // setting and saving new password
     user.password = newPassword;
     await user.save();

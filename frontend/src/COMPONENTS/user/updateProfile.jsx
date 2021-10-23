@@ -21,7 +21,7 @@ export default function UpdateProfile() {
   const [processing, setProcessing] = useState(false);
 
   useEffect(() => {
-    if (user && processing == false) {
+    if (user && processing === false) {
       setName(user.name);
       setEmail(user.email);
       setAvatarPreview(user.avatar.url);
@@ -37,7 +37,7 @@ export default function UpdateProfile() {
 
       dispatch({ type: AC.UPDATE_PROFILE_RESET });
     }
-  }, [user, error, alert, dispatch, loading, history, isUpdated]);
+  }, [user, error, alert, dispatch, loading, history, isUpdated, processing]);
 
   const submitFunc = (e) => {
     e.preventDefault();
@@ -121,7 +121,7 @@ export default function UpdateProfile() {
                 disabled={loading ? true : false}
                 className="btn update-btn btn-block mt-4 mb-3"
               >
-                {loading == true ? "processing" : "Update"}
+                {loading === true ? "processing" : "Update"}
               </button>
             </form>
           </div>

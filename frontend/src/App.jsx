@@ -14,6 +14,8 @@ import ProtectedRoute from "./COMPONENTS/route/ProtectedRoute";
 import { BrowserRouter, Route } from "react-router-dom";
 import Productpage from "./COMPONENTS/ProductDetails";
 import Dashboard from "./COMPONENTS/auth/Dashboard";
+import ForgotPassword from "./COMPONENTS/user/ForgotPassword";
+import NewPassword from "./COMPONENTS/user/NewPassword";
 
 function App() {
   const dispatch = useDispatch();
@@ -69,8 +71,14 @@ function App() {
           <ProtectedRoute path="/password/update" exact>
             <PasswordUpdate />
           </ProtectedRoute>
-          
-          {/* <ProtectedRoute path="/me" component={ProfilePage} exact /> */}
+
+          <Route path="/password/forgot" exact>
+            <ForgotPassword />
+          </Route>
+
+          <Route path="/password/reset/:hashedTkn" exact>
+            <NewPassword />
+          </Route>
         </div>
         <Footer />
       </div>

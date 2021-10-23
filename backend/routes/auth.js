@@ -21,7 +21,7 @@ router.route("/register").post(registerUser);
 router.route("/login").post(loginUser);
 router.route("/logout").get(logoutUser);
 router.route("/password/forgot").post(forgotPass);
-router.route("/password/reset/:hashedTkn").post(resetPass);
+router.route("/password/reset/:hashedTkn").put(resetPass);
 router.route("/me").get(isUserAuthenticated, getCurrentUser);
 router.route("/password/update").post(isUserAuthenticated, updatePassword);
 router.route("/updateProfile").put(isUserAuthenticated, updateProfile);

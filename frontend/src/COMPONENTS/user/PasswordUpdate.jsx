@@ -11,7 +11,7 @@ export default function PasswordUpdate() {
   const alert = useAlert();
   const dispatch = useDispatch();
 
-  const { error, isUpdated, loading } = useSelector((state) => state.user2);
+  const { error, isUpdated } = useSelector((state) => state.user2);
 
   // local state
   const [oldPassword, setOldPassword] = useState("");

@@ -82,11 +82,40 @@ export const updatePasswordAction = (passwordData) => async (dispatch) => {
 
     const config = { headers: { "Content-Type": "application/json" } };
     const { data } = await axios.post("/api/v1/password/update", passwordData, config);
-    
+
     dispatch({ type: AC.UPDATE_PASSWORD_SUCCESS, payload: data.message });
   } catch (error) {
     console.log(error);
     dispatch({ type: AC.UPDATE_PASSWORD_FAIL, payload: error.response.data.message });
+  }
+};
+
+// forgot password action
+export const forgotPasswordAction = (email) => async (dispatch) => {
+  try {
+    dispatch({ type: AC.FORGOT_PASSWORD_REQUEST });
+
+    const config = { headers: { "Content-Type": "application/json" } };
+    const { data } = await axios.post("/api/v1/password/forgot", email, config);
+    dispatch({ type: AC.FORGOT_PASSWORD_SUCCESS, payload: data.message });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: AC.FORGOT_PASSWORD_FAIL, payload: error.response.data.message });
+  }
+};
+
+// set new password action
+export const setNewPasswordAction = (sentData) => async (dispatch) => {
+  try {
+    let linkReset = `/api/v1/password/reset/:${sentData.hashedTkn}`;
+ 
+    dispatch({ type: AC.SET_NEW_PASSWORD_REQUEST });
+    const config = { headers: { "Content-Type": "application/json" } };
+    const { data } = await axios.put(linkReset, sentData, config);
+    dispatch({ type: AC.SET_NEW_PASSWORD_SUCCESS, payload: data.success });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: AC.SET_NEW_PASSWORD_FAIL, payload: error.response.data.message });
   }
 };
 
