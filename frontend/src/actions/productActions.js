@@ -29,7 +29,7 @@ export const getProductDetailsAction = (productId) => async (dispatch) => {
   }
 };
 
-// // Clear Errors
-// export const clearErrors = () => async (dispatch) => {
-//   dispatch({ type: PC.CLEAR_ERRORS });
-// };
+// Clear Errors
+export const clearErrors = () => async (dispatch) => {
+  dispatch({ type: PC.CLEAR_ERRORS });
+};

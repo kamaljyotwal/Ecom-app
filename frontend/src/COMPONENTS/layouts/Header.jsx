@@ -11,6 +11,7 @@ export default function Header() {
 
   const [toggleOn, setToggleOn] = useState(false);
   const { isAuthenticated, user } = useSelector((state) => state.user);
+  const { cartItems } = useSelector((state) => state.cart);
 
   function logoutFunc() {
     dispatch(logoutAction());
@@ -40,7 +41,7 @@ export default function Header() {
               Cart
             </span>
             <span className="ml-1 mr-3" id="cart_count">
-              2
+              {cartItems.length}
             </span>
           </NavLink>
 

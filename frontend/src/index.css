@@ -603,6 +603,11 @@ a[aria-expanded="true"] {
 .profileContainer:active {
   border-color: #febd69;
 }
+.roweach {
+  border: 1px solid #eee;
+  margin: 8px;
+  padding: 5px;
+}
 .toggleContainer {
   z-index: 900;
   background-color: #fff;

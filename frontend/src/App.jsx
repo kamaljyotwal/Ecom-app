@@ -16,6 +16,7 @@ import Productpage from "./COMPONENTS/ProductDetails";
 import Dashboard from "./COMPONENTS/auth/Dashboard";
 import ForgotPassword from "./COMPONENTS/user/ForgotPassword";
 import NewPassword from "./COMPONENTS/user/NewPassword";
+import Cart from "./COMPONENTS/cart/Cart";
 
 function App() {
   const dispatch = useDispatch();
@@ -54,6 +55,14 @@ function App() {
             <Signup />
           </Route>
 
+          <Route path="/cart" exact>
+            <Cart />
+          </Route>
+
+          <Route path="/password/reset/:hashedTkn" exact>
+            <NewPassword />
+          </Route>
+
           {/* profile page | protected  */}
           <ProtectedRoute path="/me" exact>
             <ProfilePage />
@@ -74,10 +83,6 @@ function App() {
 
           <Route path="/password/forgot" exact>
             <ForgotPassword />
-          </Route>
-
-          <Route path="/password/reset/:hashedTkn" exact>
-            <NewPassword />
           </Route>
         </div>
         <Footer />
