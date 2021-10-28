@@ -1,16 +1,16 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import CustomTitle from "../layouts/CustomTitle";
 import { removeItemFromCartAction, addItemToCartAction } from "../../actions/cartActions";
 
 export default function Cart() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   // global state
   const { cartItems } = useSelector((state) => state.cart);
-  // const { product } = useSelector((state) => state.productDetails);
-
+  const { isAuthenticated } = useSelector((state) => state.user);
   // handlers
   function removeItemHandler(productId) {
     dispatch(removeItemFromCartAction(productId));
@@ -23,6 +23,13 @@ export default function Cart() {
   function decreaseQty(product, quantity) {
     if (quantity > 1) {
       dispatch(addItemToCartAction(product, quantity - 1));
+    }
+  }
+  function checkoutHandler() {
+    if (isAuthenticated) {
+      history.push("/confirm");
+    } else {
+      history.push("/login?redirect=shipping");
     }
   }
 
@@ -39,58 +46,56 @@ export default function Cart() {
             <hr />
             <div className="cart-item">
               {cartItems.map((i) => (
-                <>
-                  <div className="row roweach" key={i.product}>
-                    <div className="col-4 col-lg-3">
-                      <img
-                        src={i.image}
-                        alt="Laptop"
-                        height="100"
-                        width="140px"
-                        style={{ objectFit: "contain" }}
+                <div className="row roweach" key={i.product}>
+                  <div className="col-4 col-lg-3">
+                    <img
+                      src={i.image}
+                      alt="Laptop"
+                      height="100"
+                      width="140px"
+                      style={{ objectFit: "contain" }}
+                    />
+                  </div>
+
+                  <div className="col-5 col-lg-3">
+                    <Link to={`/product/${i.product}`}>{i.name}</Link>
+                  </div>
+
+                  <div className="col-4 col-lg-2 mt-4 mt-lg-0">
+                    <p id="card_item_price">${i.price}</p>
+                  </div>
+
+                  <div className="col-4 col-lg-3 mt-4 mt-lg-0">
+                    <div className="stockCounter d-inline">
+                      <span
+                        onClick={() => decreaseQty(i.product, i.quantity)}
+                        className="btn btn-danger minus"
+                      >
+                        -
+                      </span>
+                      <input
+                        type="number"
+                        className="form-control count d-inline"
+                        value={i.quantity}
+                        readOnly
                       />
-                    </div>
-
-                    <div className="col-5 col-lg-3">
-                      <Link to={`/product/${i.product}`}>{i.name}</Link>
-                    </div>
-
-                    <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-                      <p id="card_item_price">${i.price}</p>
-                    </div>
-
-                    <div className="col-4 col-lg-3 mt-4 mt-lg-0">
-                      <div className="stockCounter d-inline">
-                        <span
-                          onClick={() => decreaseQty(i.product, i.quantity)}
-                          className="btn btn-danger minus"
-                        >
-                          -
-                        </span>
-                        <input
-                          type="number"
-                          className="form-control count d-inline"
-                          value={i.quantity}
-                          readOnly
-                        />
-                        <span
-                          onClick={() => increaseQty(i.product, i.quantity, i.stock)}
-                          className="btn btn-primary plus"
-                        >
-                          +
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="col-4 col-lg-1 mt-4 mt-lg-0">
-                      <i
-                        onClick={(e) => removeItemHandler(i.product)}
-                        id="delete_cart_item"
-                        className="fa fa-trash btn btn-danger"
-                      ></i>
+                      <span
+                        onClick={() => increaseQty(i.product, i.quantity, i.stock)}
+                        className="btn btn-primary plus"
+                      >
+                        +
+                      </span>
                     </div>
                   </div>
-                </>
+
+                  <div className="col-4 col-lg-1 mt-4 mt-lg-0">
+                    <i
+                      onClick={(e) => removeItemHandler(i.product)}
+                      id="delete_cart_item"
+                      className="fa fa-trash btn btn-danger"
+                    ></i>
+                  </div>
+                </div>
               ))}
             </div>
             <hr />
@@ -115,7 +120,11 @@ export default function Cart() {
               </p>
 
               <hr />
-              <button id="checkout_btn" className="btn btn-primary btn-block">
+              <button
+                onClick={checkoutHandler}
+                id="checkout_btn"
+                className="btn btn-primary btn-block"
+              >
                 Check out
               </button>
             </div>

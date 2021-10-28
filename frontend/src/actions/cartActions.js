@@ -16,7 +16,7 @@ export const addItemToCartAction = (productId, quantity) => async (dispatch, get
       quantity,
     },
   });
-  localStorage.setItem("cartIems", JSON.stringify(getState().cart.cartItems));
+  localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
 };
 
 // remove item from cart action
@@ -25,5 +25,11 @@ export const removeItemFromCartAction = (productId) => async (dispatch, getState
 
   dispatch({ type: CC.REMOVE_ITEM_FROM_CART, payload: filtered });
 
-  localStorage.setItem("cartIems", JSON.stringify(filtered));
+  localStorage.setItem("cartItems", JSON.stringify(filtered));
+};
+
+// save shipping Info
+export const saveShippingInfoAction = (data) => async (dispatch, getState) => {
+  dispatch({ type: CC.SAVE_SHIPPING_INFO, payload: data });
+  localStorage.setItem("shippingInfo", JSON.stringify(data));
 };

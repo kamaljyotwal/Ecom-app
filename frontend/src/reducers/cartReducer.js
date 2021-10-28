@@ -1,6 +1,6 @@
 import * as CC from "../constants/cartConstants";
 
-const initialState = { cartItems: [] };
+const initialState = { cartItems: [], shippingInfo: {} };
 
 export const cartReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -22,10 +22,15 @@ export const cartReducer = (state = initialState, action) => {
       }
 
     case CC.REMOVE_ITEM_FROM_CART:
-      console.log(action);
       return {
         ...state,
         cartItems: action.payload,
+      };
+
+    case CC.SAVE_SHIPPING_INFO:
+      return {
+        ...state,
+        shippingInfo: action.payload,
       };
     default:
       return state;

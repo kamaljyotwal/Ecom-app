@@ -17,6 +17,8 @@ import Dashboard from "./COMPONENTS/auth/Dashboard";
 import ForgotPassword from "./COMPONENTS/user/ForgotPassword";
 import NewPassword from "./COMPONENTS/user/NewPassword";
 import Cart from "./COMPONENTS/cart/Cart";
+import Shipping from "./COMPONENTS/cart/Shipping";
+import ConfirmOrder from "./COMPONENTS/cart/ConfirmOrder";
 
 function App() {
   const dispatch = useDispatch();
@@ -63,6 +65,10 @@ function App() {
             <NewPassword />
           </Route>
 
+          <ProtectedRoute path="/shipping" exact>
+            <Shipping />
+          </ProtectedRoute>
+
           {/* profile page | protected  */}
           <ProtectedRoute path="/me" exact>
             <ProfilePage />
@@ -71,6 +77,10 @@ function App() {
           {/* dashboard | protected | admin */}
           <ProtectedRoute path="/dashboard" adminRoute exact>
             <Dashboard />
+          </ProtectedRoute>
+
+          <ProtectedRoute path="/confirm" exact>
+            <ConfirmOrder />
           </ProtectedRoute>
 
           <ProtectedRoute path="/me/update" exact>
