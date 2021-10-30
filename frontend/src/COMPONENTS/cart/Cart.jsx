@@ -11,6 +11,7 @@ export default function Cart() {
   // global state
   const { cartItems } = useSelector((state) => state.cart);
   const { isAuthenticated } = useSelector((state) => state.user);
+  
   // handlers
   function removeItemHandler(productId) {
     dispatch(removeItemFromCartAction(productId));
@@ -27,7 +28,7 @@ export default function Cart() {
   }
   function checkoutHandler() {
     if (isAuthenticated) {
-      history.push("/confirm");
+      history.push("/shipping");
     } else {
       history.push("/login?redirect=shipping");
     }

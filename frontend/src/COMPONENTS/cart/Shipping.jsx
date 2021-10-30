@@ -4,6 +4,7 @@ import { saveShippingInfoAction } from "../../actions/cartActions";
 import CustomTitle from "../layouts/CustomTitle";
 import { countries } from "countries-list";
 import { useHistory } from "react-router-dom";
+import CheckoutSteps from "./CheckoutSteps";
 
 export default function Shipping() {
   const dispatch = useDispatch();
@@ -31,7 +32,8 @@ export default function Shipping() {
   return (
     <>
       <CustomTitle title="Shipping Page" />
-      <div className="row wrapper">
+      <CheckoutSteps shipping />
+      <div className="row wrapper shippingContainer">
         <div className="col-10 col-lg-5">
           <form onSubmit={submitHandler} className="shadow-lg">
             <h1 className="mb-4">Shipping Info</h1>

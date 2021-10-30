@@ -13,6 +13,10 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+const server = app.listen(process.env.PORT, () =>
+  console.log(`ecom app listening on port ${process.env.PORT} and mode is ${process.env.NODE_ENV}!`)
+);
+
 //handling uncaught exceptions
 // it is working but unnecessary
 // process.on('uncaughtException', err => {
@@ -20,10 +24,6 @@ cloudinary.config({
 //   console.log('Shutting down due to uncaught exception');
 //   process.exit(1)
 // })
-
-const server = app.listen(process.env.PORT, () =>
-  console.log(`ecom app listening on port ${process.env.PORT} and mode is ${process.env.NODE_ENV}!`)
-);
 
 // handing unhandled promise rejection
 // process.on("unhandledRejection", err => {

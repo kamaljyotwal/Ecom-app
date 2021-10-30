@@ -7,6 +7,7 @@ import Signup from "./COMPONENTS/auth/Signup";
 import ProfilePage from "./COMPONENTS/auth/Profile";
 import UpdateProfile from "./COMPONENTS/user/updateProfile";
 import PasswordUpdate from "./COMPONENTS/user/PasswordUpdate";
+import Payment from "./COMPONENTS/cart/Payment";
 import { loadCurrentUserAction } from "./actions/authAction";
 import { useDispatch } from "react-redux";
 import ProtectedRoute from "./COMPONENTS/route/ProtectedRoute";
@@ -67,6 +68,10 @@ function App() {
 
           <ProtectedRoute path="/shipping" exact>
             <Shipping />
+          </ProtectedRoute>
+
+          <ProtectedRoute path="/payment" exact>
+            <Payment />
           </ProtectedRoute>
 
           {/* profile page | protected  */}
