@@ -53,26 +53,25 @@ export default function ConfirmOrder() {
             <h4 className="mt-4">Your Cart Items:</h4>
 
             {cartItems.map((i) => (
-              <>
+              <div className="cart-item my-1" key={i.product}>
                 <hr />
-                <div className="cart-item my-1" key={i.product}>
-                  <div className="row">
-                    <div className="col-4 col-lg-2">
-                      <img src={i.image} alt="Laptop" height="45" width="65" />
-                    </div>
+                <div className="row">
+                  <div className="col-4 col-lg-2">
+                    <img src={i.image} alt="Laptop" height="45" width="65" />
+                  </div>
 
-                    <div className="col-5 col-lg-6">
-                      <Link to={`/product/${i.product}`}>{i.name}</Link>
-                    </div>
+                  <div className="col-5 col-lg-6">
+                    <Link to={`/product/${i.product}`}>{i.name}</Link>
+                  </div>
 
-                    <div className="col-4 col-lg-4 mt-4 mt-lg-0">
-                      <p>
-                        {`${i.quantity} x ${i.price}`} = <b> ${i.quantity * i.price}</b>
-                      </p>
-                    </div>
+                  <div className="col-4 col-lg-4 mt-4 mt-lg-0">
+                    <p>
+                      {`${i.quantity} x ${i.price}`} =
+                      <b> ${Number(i.quantity * i.price).toFixed(2)}</b>
+                    </p>
                   </div>
                 </div>
-              </>
+              </div>
             ))}
             <hr />
           </div>
@@ -82,13 +81,16 @@ export default function ConfirmOrder() {
               <h4>Order Summary</h4>
               <hr />
               <p>
-                Subtotal: <span className="order-summary-values">${itemsPrice}</span>
+                Subtotal:{" "}
+                <span className="order-summary-values">${Number(itemsPrice).toFixed(2)}</span>
               </p>
               <p>
-                Shipping: <span className="order-summary-values">${shippingPrice}</span>
+                Shipping:{" "}
+                <span className="order-summary-values"> ${Number(shippingPrice).toFixed(2)}</span>
               </p>
               <p>
-                Tax / GST: <span className="order-summary-values">${taxPrice}</span>
+                Tax / GST:
+                <span className="order-summary-values">${Number(taxPrice).toFixed(2)}</span>
               </p>
 
               <hr />
@@ -98,7 +100,11 @@ export default function ConfirmOrder() {
               </p>
 
               <hr />
-              <button onClick={processToPayment} id="checkout_btn" className="btn btn-primary btn-block">
+              <button
+                onClick={processToPayment}
+                id="checkout_btn"
+                className="btn btn-primary btn-block"
+              >
                 Proceed to Payment
               </button>
             </div>

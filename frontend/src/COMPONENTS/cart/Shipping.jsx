@@ -64,7 +64,7 @@ export default function Shipping() {
             <div className="form-group">
               <label htmlFor="phone_field">Phone No</label>
               <input
-                type="phone"
+                type="number"
                 id="phone_field"
                 className="form-control"
                 value={phoneNo}

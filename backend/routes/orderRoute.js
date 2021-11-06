@@ -11,7 +11,7 @@ const {
 } = require("../controllers/orderController");
 const { isUserAuthenticated, checkRole } = require("../middlewares/isAuthehticated");
 
-router.route("/newOrder").post(isUserAuthenticated, newOrder);
+router.route("/new-order").post(isUserAuthenticated, newOrder);
 router.route("/delete/:id").delete(isUserAuthenticated, deleteOrder);
 router.route("/me").get(isUserAuthenticated, getAllOrdersByUser);
 router.route("/:id").get(isUserAuthenticated, getSingleOrder);

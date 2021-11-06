@@ -3,7 +3,7 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const ErrorHandler = require("../utils/errorHandler");
 const ProductSchema = require("../modals/product");
 
-// creation new order => api/v1/order/newOrder
+// creation new order => api/v1/order/new-order
 exports.newOrder = catchAsyncErrors(async (req, res, next) => {
   const {
     shippingInfo,
@@ -19,7 +19,6 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
   const order = await orderModal.create({
     shippingInfo,
     shippingPrice,
-    user,
     paymentInfo,
     itemsPrice,
     taxPrice,
@@ -33,7 +32,8 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
 
 // get single order => api/v1/order/:id
 exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
-  const singleOrder = await orderModal.findById(req.params.id).populate("users", "email");
+  const singleOrder = await orderModal.findById(req.params.id).populate("user", "email");
+
   if (!singleOrder) {
     return res
       .status(404)

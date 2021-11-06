@@ -26,7 +26,7 @@ const orderSchema = new mongoose.Schema(
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      required: [true, "provide who is ordering this"],
+      required: true,
       ref: "users",
     },
     orderedItems: [
@@ -46,6 +46,9 @@ const orderSchema = new mongoose.Schema(
         price: {
           type: Number,
           required: true,
+        },
+        stock: {
+          type: Number,
         },
         productId: {
           type: mongoose.Schema.Types.ObjectId,
