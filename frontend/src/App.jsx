@@ -22,10 +22,12 @@ import Cart from "./COMPONENTS/cart/Cart";
 import Shipping from "./COMPONENTS/cart/Shipping";
 import ConfirmOrder from "./COMPONENTS/cart/ConfirmOrder";
 import OrderSuccess from "./COMPONENTS/cart/OrderSuccess";
+import ListOrder from "./COMPONENTS/order/ListOrder";
 
 // Payment
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import OrderDetails from "./COMPONENTS/order/OrderDetails";
 
 function App() {
   const [stripeApikey, setStripeApikey] = useState("");
@@ -70,6 +72,9 @@ function App() {
           <Route path="/register" exact>
             <Signup />
           </Route>
+          <ProtectedRoute path="/order/:orderId" exact>
+            <OrderDetails />
+          </ProtectedRoute>
 
           <Route path="/cart" exact>
             <Cart />
@@ -99,6 +104,10 @@ function App() {
           {/* dashboard | protected | admin */}
           <ProtectedRoute path="/dashboard" adminRoute exact>
             <Dashboard />
+          </ProtectedRoute>
+
+          <ProtectedRoute path="/orders/me" adminRoute exact>
+            <ListOrder />
           </ProtectedRoute>
 
           <ProtectedRoute path="/confirm" exact>

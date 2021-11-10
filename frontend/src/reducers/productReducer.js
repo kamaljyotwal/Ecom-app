@@ -60,3 +60,38 @@ export const productDetailsReducer = (state = { product: {} }, action) => {
       return state;
   }
 };
+
+// new review reducer
+export const newReviewReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PC.NEW_REVIEW_REQUEST:
+      return { ...state, loading: true };
+
+    case PC.NEW_REVIEW_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload,
+      };
+
+    case PC.NEW_REVIEW_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: "some error occured",
+      };
+    case PC.NEW_REVIEW_RESET:
+      return {
+        ...state,
+        success: false,
+      };
+
+    case PC.CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};

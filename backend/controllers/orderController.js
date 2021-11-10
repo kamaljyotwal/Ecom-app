@@ -39,6 +39,7 @@ exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
       .status(404)
       .json({ success: false, message: `No order with id: ${req.params.id} found` });
   }
+
   res.status(200).json({ success: true, data: singleOrder });
 });
 

@@ -41,7 +41,6 @@ export const loadCurrentUserAction = () => async (dispatch) => {
     dispatch({ type: AC.LOAD_USER_REQUEST });
 
     const { data } = await axios.get("/api/v1/me");
-
     dispatch({ type: AC.LOAD_USER_SUCCESS, payload: data.data });
   } catch (error) {
     console.log(error);
@@ -108,7 +107,7 @@ export const forgotPasswordAction = (email) => async (dispatch) => {
 export const setNewPasswordAction = (sentData) => async (dispatch) => {
   try {
     let linkReset = `/api/v1/password/reset/:${sentData.hashedTkn}`;
- 
+
     dispatch({ type: AC.SET_NEW_PASSWORD_REQUEST });
     const config = { headers: { "Content-Type": "application/json" } };
     const { data } = await axios.put(linkReset, sentData, config);

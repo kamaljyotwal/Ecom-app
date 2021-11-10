@@ -7,6 +7,8 @@ import { useAlert } from "react-alert";
 import { Carousel } from "react-bootstrap";
 import CustomTitle from "../COMPONENTS/layouts/CustomTitle";
 import { addItemToCartAction } from "../actions/cartActions";
+import ListReviews from "./review/ListReviews";
+import ReviewModal from "./review/ReviewModal";
 
 export default function ProductDetails() {
   const { productId } = useParams();
@@ -15,21 +17,27 @@ export default function ProductDetails() {
 
   // global state
   const { product, error, loading } = useSelector((state) => state.productDetails);
+  const { isAuthenticated } = useSelector((state) => state.user);
+  const { success } = useSelector((state) => state.newReview);
 
   // local state
   const [quantity, setQuantity] = useState(1);
+  const [reviewModalToggle, setReviewModalToggle] = useState(false);
+  const [rating, setRating] = useState(0);
 
   // side Effects
   useEffect(() => {
     dispatch(getProductDetailsAction(productId));
-    // eslint-disable-next-line
-  }, []);
-  useEffect(() => {
+
+    if (success) {
+      alert.success("Review added");
+    }
+
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [error, alert, dispatch]);
+  }, [success, alert, error, dispatch]);
 
   // handlers
   function addToCart() {
@@ -44,6 +52,44 @@ export default function ProductDetails() {
   function decreaseQty() {
     if (quantity > 1) {
       setQuantity(quantity - 1);
+    }
+  }
+
+  function setUserRatings(e) {
+    let stars = document.querySelectorAll(".star");
+
+    stars.forEach((star, index) => {
+      star.starValue = index + 1;
+
+      ["click", "mouseover", "mouseout"].forEach(function (e) {
+        star.addEventListener(e, showRatings);
+      });
+    });
+
+    function showRatings(e) {
+      stars.forEach((star, index) => {
+        if (e.type === "click") {
+          if (index < this.starValue) {
+            star.classList.add("orange");
+
+            setRating(this.starValue);
+          } else {
+            star.classList.remove("orange");
+          }
+        }
+
+        if (e.type === "mouseover") {
+          if (index < this.starValue) {
+            star.classList.add("yellow");
+          } else {
+            star.classList.remove("yellow");
+          }
+        }
+
+        if (e.type === "mouseout") {
+          star.classList.remove("yellow");
+        }
+      });
     }
   }
 
@@ -133,82 +179,35 @@ export default function ProductDetails() {
                   Sold by: <strong>Amazon</strong>
                 </p>
 
-                <button
-                  id="review_btn"
-                  type="button"
-                  className="btn btn-primary mt-4"
-                  data-toggle="modal"
-                  data-target="#ratingModal"
-                >
-                  Submit Your Review
-                </button>
-
-                <div className="row mt-2 mb-5">
-                  <div className="rating w-50">
-                    <div
-                      className="modal fade"
-                      id="ratingModal"
-                      tabIndex="-1"
-                      role="dialog"
-                      aria-labelledby="ratingModalLabel"
-                      aria-hidden="true"
-                    >
-                      <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h5 className="modal-title" id="ratingModalLabel">
-                              Submit Review
-                            </h5>
-                            <button
-                              type="button"
-                              className="close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div className="modal-body">
-                            <ul className="stars">
-                              <li className="star">
-                                <i className="fa fa-star"></i>
-                              </li>
-                              <li className="star">
-                                <i className="fa fa-star"></i>
-                              </li>
-                              <li className="star">
-                                <i className="fa fa-star"></i>
-                              </li>
-                              <li className="star">
-                                <i className="fa fa-star"></i>
-                              </li>
-                              <li className="star">
-                                <i className="fa fa-star"></i>
-                              </li>
-                            </ul>
-
-                            <textarea
-                              name="review"
-                              id="review"
-                              className="form-control mt-3"
-                            ></textarea>
-
-                            <button
-                              className="btn my-3 float-right review-btn px-4 text-white"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              Submit
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                {isAuthenticated ? (
+                  <button
+                    id="review_btn"
+                    type="button"
+                    className="btn btn-primary mt-4"
+                    data-toggle="modal"
+                    data-target="#ratingModal"
+                    onClick={(e) => (setUserRatings(e), setReviewModalToggle(true))}
+                  >
+                    Submit Your Review
+                  </button>
+                ) : (
+                  <div className="alert alert-danger mt-5" type="alert">
+                    Login to post your review.
                   </div>
-                </div>
+                )}
               </div>
             </div>
+            <ReviewModal
+              setReviewModalToggle={setReviewModalToggle}
+              reviewModalToggle={reviewModalToggle}
+              productId={productId}
+              rating={rating}
+              setRating={setRating}
+            />
           </div>
+          {product.reviews && product.reviews.length > 0 && (
+            <ListReviews reviews={product.reviews} />
+          )}
         </>
       )}
     </>

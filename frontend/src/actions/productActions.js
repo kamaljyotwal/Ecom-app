@@ -29,6 +29,23 @@ export const getProductDetailsAction = (productId) => async (dispatch) => {
   }
 };
 
+// new review action
+export const newReviewAction = (formData, productId) => async (dispatch) => {
+  try {
+    dispatch({ type: PC.NEW_REVIEW_SUCCESS });
+    const config = { headers: { "Content-Type": "application/json" } };
+    const { data } = await axios.put(`/api/v1/addReview`, formData, config);
+
+    dispatch({ type: PC.NEW_REVIEW_SUCCESS, payload: data.success });
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: PC.NEW_REVIEW_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
 // Clear Errors
 export const clearErrors = () => async (dispatch) => {
   dispatch({ type: PC.CLEAR_ERRORS });
