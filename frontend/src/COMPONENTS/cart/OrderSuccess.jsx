@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CustomTitle from "../layouts/CustomTitle";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { EMPTY_CART } from "../../constants/cartConstants";
 
 export default function OrderSuccess() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    localStorage.removeItem("cartItems");
+    sessionStorage.removeItem("orderInfo");
+    dispatch({ type: EMPTY_CART });
+  }, [dispatch]);
+
   return (
     <>
       <CustomTitle title={"Order Success"} />

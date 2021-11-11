@@ -95,6 +95,7 @@ function Payment() {
             status: result.paymentIntent.status,
           };
           dispatch(createOrderAction(orderData));
+
           history.push("/success");
         }
       }

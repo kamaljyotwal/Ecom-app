@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import CustomTitle from "../layouts/CustomTitle";
@@ -11,19 +11,21 @@ export default function Cart() {
   // global state
   const { cartItems } = useSelector((state) => state.cart);
   const { isAuthenticated } = useSelector((state) => state.user);
-  
+  // console.log(cartItems);
+
+
   // handlers
   function removeItemHandler(productId) {
     dispatch(removeItemFromCartAction(productId));
   }
-  function increaseQty(product, quantity, stock) {
+  function increaseQty(productId, quantity, stock) {
     if (quantity < stock) {
-      dispatch(addItemToCartAction(product, quantity + 1));
+      dispatch(addItemToCartAction(productId, quantity + 1));
     }
   }
-  function decreaseQty(product, quantity) {
+  function decreaseQty(productId, quantity) {
     if (quantity > 1) {
-      dispatch(addItemToCartAction(product, quantity - 1));
+      dispatch(addItemToCartAction(productId, quantity - 1));
     }
   }
   function checkoutHandler() {
@@ -39,7 +41,7 @@ export default function Cart() {
       <CustomTitle title="Your Cart" />
       <div className="container container-fluid">
         <h2 className="mt-5">
-          {cartItems === [] ? "Your Cart is Empty" : `Your Cart: ${cartItems.length} items`}
+          {cartItems.length == 0 ? "Your Cart is Empty" : `Your Cart: ${cartItems.length} items`}
         </h2>
 
         <div className="row d-flex justify-content-between">
@@ -47,7 +49,7 @@ export default function Cart() {
             <hr />
             <div className="cart-item">
               {cartItems.map((i) => (
-                <div className="row roweach" key={i.product}>
+                <div className="row roweach" key={i.productId}>
                   <div className="col-4 col-lg-3">
                     <img
                       src={i.image}
@@ -59,7 +61,7 @@ export default function Cart() {
                   </div>
 
                   <div className="col-5 col-lg-3">
-                    <Link to={`/product/${i.product}`}>{i.name}</Link>
+                    <Link to={`/product/${i.productId}`}>{i.name}</Link>
                   </div>
 
                   <div className="col-4 col-lg-2 mt-4 mt-lg-0">
@@ -69,7 +71,7 @@ export default function Cart() {
                   <div className="col-4 col-lg-3 mt-4 mt-lg-0">
                     <div className="stockCounter d-inline">
                       <span
-                        onClick={() => decreaseQty(i.product, i.quantity)}
+                        onClick={() => decreaseQty(i.productId, i.quantity)}
                         className="btn btn-danger minus"
                       >
                         -
@@ -81,7 +83,7 @@ export default function Cart() {
                         readOnly
                       />
                       <span
-                        onClick={() => increaseQty(i.product, i.quantity, i.stock)}
+                        onClick={() => increaseQty(i.productId, i.quantity, i.stock)}
                         className="btn btn-primary plus"
                       >
                         +
@@ -91,7 +93,7 @@ export default function Cart() {
 
                   <div className="col-4 col-lg-1 mt-4 mt-lg-0">
                     <i
-                      onClick={(e) => removeItemHandler(i.product)}
+                      onClick={(e) => removeItemHandler(i.productId)}
                       id="delete_cart_item"
                       className="fa fa-trash btn btn-danger"
                     ></i>
@@ -99,7 +101,7 @@ export default function Cart() {
                 </div>
               ))}
             </div>
-            <hr />
+            {/* {cartItems.length > 0 && <hr />} */}
           </div>
 
           <div className="col-12 col-lg-3 my-4">
@@ -122,6 +124,7 @@ export default function Cart() {
 
               <hr />
               <button
+                disabled={cartItems.length == 0 ? true : false}
                 onClick={checkoutHandler}
                 id="checkout_btn"
                 className="btn btn-primary btn-block"

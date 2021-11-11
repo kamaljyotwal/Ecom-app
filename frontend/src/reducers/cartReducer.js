@@ -5,13 +5,13 @@ const initialState = { cartItems: [], shippingInfo: {} };
 export const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case CC.ADD_TO_CART:
-      const isItemExist = state.cartItems.find((i) => i.product === action.payload.product);
+      const isItemExist = state.cartItems.find((i) => i.productId === action.payload.productId);
 
       if (isItemExist) {
         return {
           ...state,
           cartItems: state.cartItems.map((i) =>
-            i.product === isItemExist.product ? action.payload : i
+            i.productId === isItemExist.productId ? action.payload : i
           ),
         };
       } else {
@@ -27,6 +27,11 @@ export const cartReducer = (state = initialState, action) => {
         cartItems: action.payload,
       };
 
+    case CC.EMPTY_CART:
+      return {
+        ...state,
+        cartItems: [],
+      };
     case CC.SAVE_SHIPPING_INFO:
       return {
         ...state,

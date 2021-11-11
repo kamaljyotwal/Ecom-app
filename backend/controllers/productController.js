@@ -82,9 +82,8 @@ exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
 // create new review => api/v1/addReview/
 exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
   const { comment, rating, productId } = req.body;
-
   try {
-    const product = await productSchema.findById("61238fd4f1a6a330f47ad421");
+    const product = await productSchema.findById(productId);
 
     const review = {
       user: req.user._id,

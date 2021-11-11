@@ -19,6 +19,8 @@ export default function ProductDetails() {
   const { product, error, loading } = useSelector((state) => state.productDetails);
   const { isAuthenticated } = useSelector((state) => state.user);
   const { success } = useSelector((state) => state.newReview);
+  const { cartItems } = useSelector((state) => state.cart);
+  // console.log(cartItems);
 
   // local state
   const [quantity, setQuantity] = useState(1);
@@ -41,6 +43,7 @@ export default function ProductDetails() {
 
   // handlers
   function addToCart() {
+    // console.log(`${productId} - ${quantity}`);
     dispatch(addItemToCartAction(productId, quantity));
     alert.success("Product added to cart");
   }

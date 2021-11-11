@@ -21,7 +21,7 @@ export const addItemToCartAction = (productId, quantity) => async (dispatch, get
 
 // remove item from cart action
 export const removeItemFromCartAction = (productId) => async (dispatch, getState) => {
-  const filtered = getState().cart.cartItems.filter((i) => i.product !== productId);
+  const filtered = getState().cart.cartItems.filter((i) => i.productId !== productId);
 
   dispatch({ type: CC.REMOVE_ITEM_FROM_CART, payload: filtered });
 

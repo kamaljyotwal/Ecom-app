@@ -87,11 +87,11 @@ const productSchema = new mongoose.Schema(
         },
       },
     ],
-    poster: {
-      type: mongoose.Schema.ObjectId,
-      required: [true, "provide the poster"],
-      ref: "users",
-    },
+    // poster: {
+    //   type: mongoose.Schema.ObjectId,
+    //   required: [true, "provide the poster"],
+    //   ref: "users",
+    // },
     createdAt: {
       type: Date,
       default: Date.now(),
