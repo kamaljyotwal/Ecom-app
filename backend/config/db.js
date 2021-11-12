@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 // currently connecting to local mongoDB
 function connectDb() {
   mongoose
-    .connect(process.env.MONGO_ATLAS_URI, {
+    .connect(`${process.env.MONGO_ATLAS_URI}`, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,

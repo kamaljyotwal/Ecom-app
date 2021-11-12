@@ -5,10 +5,13 @@ const errorMiddleware = require("./middlewares/error");
 var cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const path = require("path");
+// require("dotenv").config({ path: "backend/config/conf.env" })
+
 // setup for env
 if (process.env.NODE_ENV != "PRODUCTION") {
   require("dotenv").config({ path: "backend/config/conf.env" });
 }
+// console.log(process.env.NODE_ENV);
 
 if (process.env.NODE_ENV == "PRODUCTION") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));
