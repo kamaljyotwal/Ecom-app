@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import CustomTitle from "../layouts/CustomTitle";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { EMPTY_CART } from "../../constants/cartConstants";
 
 export default function OrderSuccess() {

@@ -11,7 +11,7 @@ export default function ListOrder() {
   const alert = useAlert();
   const dispatch = useDispatch();
 
-  //   global
+  // global
   const { loading, orders, error } = useSelector((state) => state.myOrders);
 
   useEffect(() => {
@@ -20,7 +20,8 @@ export default function ListOrder() {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, alert, error]);
+    // eslint-disable-next-line
+  }, [dispatch, alert]);
 
   const setOrders = () => {
     const data = {
@@ -54,36 +55,43 @@ export default function ListOrder() {
       rows: [],
     };
 
-    orders.forEach((order) => {
-      data.rows.push({
-        id: order._id,
-        numOfItems: order.orderedItems.length,
-        amount: `$${order.totalPrice}`,
-        status:
-          order.orderStatus && String(order.orderStatus).includes("Delivered") ? (
-            <p style={{ color: "green" }}>{order.orderStatus}</p>
-          ) : (
-            <p style={{ color: "red" }}>{order.orderStatus}</p>
+    orders &&
+      orders.forEach((order) => {
+        data.rows.push({
+          id: order._id,
+          numOfItems: order.orderedItems.length,
+          amount: `$${order.totalPrice}`,
+          status:
+            order.orderStatus && String(order.orderStatus).includes("Delivered") ? (
+              <p style={{ color: "green" }}>{order.orderStatus}</p>
+            ) : (
+              <p style={{ color: "red" }}>{order.orderStatus}</p>
+            ),
+          actions: (
+            <Link to={`/order/${order._id}`} className="btn btn-primary">
+              <i className="fa fa-eye"></i>
+            </Link>
           ),
-        actions: (
-          <Link to={`/order/${order._id}`} className="btn btn-primary">
-            <i className="fa fa-eye"></i>
-          </Link>
-        ),
+        });
       });
-    });
 
     return data;
   };
 
   return (
     <>
-      <CustomTitle title="My Orders" />
-      <h1 className="my-5">My Orders</h1>
-      {loading ? (
-        <Loader />
+      {!orders ? (
+        <h1 className="my-5">You haven't placed any orders yet.</h1>
       ) : (
-        <MDBDataTable data={setOrders()} className="px-3" bordered striped hover />
+        <>
+          <CustomTitle title="My Orders" />
+          <h1 className="my-5">My Orders</h1>
+          {loading ? (
+            <Loader />
+          ) : (
+            <MDBDataTable data={setOrders()} className="px-3" bordered striped hover />
+          )}
+        </>
       )}
     </>
   );

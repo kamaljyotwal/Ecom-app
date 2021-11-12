@@ -67,7 +67,7 @@ export default function Home() {
         <Loader />
       ) : (
         <>
-          <h1>Latest Products</h1>
+          {/* <h1>Latest Products</h1> */}
           <section id="products" className="container mt-5">
             <div className="row">
               {keyword ? (

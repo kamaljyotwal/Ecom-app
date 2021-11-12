@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import CustomTitle from "../layouts/CustomTitle";
@@ -12,7 +12,6 @@ export default function Cart() {
   const { cartItems } = useSelector((state) => state.cart);
   const { isAuthenticated } = useSelector((state) => state.user);
   // console.log(cartItems);
-
 
   // handlers
   function removeItemHandler(productId) {
@@ -41,7 +40,7 @@ export default function Cart() {
       <CustomTitle title="Your Cart" />
       <div className="container container-fluid">
         <h2 className="mt-5">
-          {cartItems.length == 0 ? "Your Cart is Empty" : `Your Cart: ${cartItems.length} items`}
+          {cartItems.length === 0 ? "Your Cart is Empty" : `Your Cart: ${cartItems.length} items`}
         </h2>
 
         <div className="row d-flex justify-content-between">
@@ -124,7 +123,7 @@ export default function Cart() {
 
               <hr />
               <button
-                disabled={cartItems.length == 0 ? true : false}
+                disabled={cartItems.length === 0 ? true : false}
                 onClick={checkoutHandler}
                 id="checkout_btn"
                 className="btn btn-primary btn-block"

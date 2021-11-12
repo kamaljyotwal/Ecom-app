@@ -72,6 +72,12 @@ function App() {
           <Route path="/register" exact>
             <Signup />
           </Route>
+
+          {/* below two are order pages */}
+          <ProtectedRoute path="/orders/me" exact>
+            <ListOrder />
+          </ProtectedRoute>
+
           <ProtectedRoute path="/order/:orderId" exact>
             <OrderDetails />
           </ProtectedRoute>
@@ -104,10 +110,6 @@ function App() {
           {/* dashboard | protected | admin */}
           <ProtectedRoute path="/dashboard" adminRoute exact>
             <Dashboard />
-          </ProtectedRoute>
-
-          <ProtectedRoute path="/orders/me" adminRoute exact>
-            <ListOrder />
           </ProtectedRoute>
 
           <ProtectedRoute path="/confirm" exact>

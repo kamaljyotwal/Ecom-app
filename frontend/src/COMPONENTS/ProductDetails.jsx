@@ -19,8 +19,6 @@ export default function ProductDetails() {
   const { product, error, loading } = useSelector((state) => state.productDetails);
   const { isAuthenticated } = useSelector((state) => state.user);
   const { success } = useSelector((state) => state.newReview);
-  const { cartItems } = useSelector((state) => state.cart);
-  // console.log(cartItems);
 
   // local state
   const [quantity, setQuantity] = useState(1);
@@ -39,7 +37,7 @@ export default function ProductDetails() {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [success, alert, error, dispatch]);
+  }, [success, alert, error, productId, dispatch]);
 
   // handlers
   function addToCart() {
@@ -189,6 +187,7 @@ export default function ProductDetails() {
                     className="btn btn-primary mt-4"
                     data-toggle="modal"
                     data-target="#ratingModal"
+                    // eslint-disable-next-line
                     onClick={(e) => (setUserRatings(e), setReviewModalToggle(true))}
                   >
                     Submit Your Review

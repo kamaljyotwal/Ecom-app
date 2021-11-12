@@ -14,29 +14,34 @@ module.exports = (err, req, res, next) => {
 
   if (process.env.NODE_ENV == "PRODUCTION") {
     // when wrong _id is provided as a param
-    if (err.name == "CastError") {
-      const messagec = `Resource not found. Invalid id ${err.value}`;
+    // if (err.name == "CastError") {
+    //   const messagec = `Resource not found. Invalid id ${err.value}`;
 
-      return res.status(err.statusCode).json({
-        success: false,
-        message: messagec,
-      });
-    }
-
+    //   return res.status(err.statusCode).json({
+    //     success: false,
+    //     message: messagec,
+    //   });
+    // }
     // handling mongoose validation error
-    if (err.errors.name.name == "ValidatorError") {
-      const msg = Object.values(err.errors).map((i) => i.message);
+    // if (err.errors.name.name == "ValidatorError") {
+    //   const msg = Object.values(err.errors).map((i) => i.message);
 
-      return res.status(400).json({
-        success: false,
-        error: msg,
-      });
-    }
+    //   return res.status(400).json({
+    //     success: false,
+    //     error: msg,
+    //   });
+    // }
 
+    // res.status(err.statusCode).json({
+    //   success: false,
+    //   message: err.message || "internal server error",
+    //   // err: err
+    // });
     res.status(err.statusCode).json({
       success: false,
-      message: err.message || "internal server error",
-      // err: err
+      error: err,
+      message: err.message,
+      stack: err.stack,
     });
   }
 };

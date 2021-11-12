@@ -53,7 +53,7 @@ export default function ConfirmOrder() {
             <h4 className="mt-4">Your Cart Items:</h4>
 
             {cartItems.map((i) => (
-              <div className="cart-item my-1" key={i.product}>
+              <div className="cart-item my-1" key={i.productId}>
                 <hr />
                 <div className="row">
                   <div className="col-4 col-lg-2">
@@ -61,7 +61,7 @@ export default function ConfirmOrder() {
                   </div>
 
                   <div className="col-5 col-lg-6">
-                    <Link to={`/product/${i.product}`}>{i.name}</Link>
+                    <Link to={`/product/${i.productId}`}>{i.name}</Link>
                   </div>
 
                   <div className="col-4 col-lg-4 mt-4 mt-lg-0">

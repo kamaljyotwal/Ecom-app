@@ -8,7 +8,7 @@ const userSchema = require("../modals/user");
 exports.isUserAuthenticated = catchAsyncErrors(async (req, res, next) => {
   const { tkn } = req.cookies;
   if (!tkn) {
-    return next(new ErrorHandler("Please Login first"), 401);
+    return next(new ErrorHandler("Please Login first", 401));
   }
   const decoded = jwt.verify(tkn, process.env.JWT_SECRET);
   // console.log(decoded);

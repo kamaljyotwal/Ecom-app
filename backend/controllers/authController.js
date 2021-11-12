@@ -78,7 +78,7 @@ exports.forgotPass = catchAsyncErrors(async (req, res, next) => {
   const address = `${process.env.FRONTEND_URL}/password/reset/${tkn}`;
   const message = `Click the link below to reset your password:`;
   const subject = `Password Reset link`;
-  
+
   try {
     const options = {
       email: user1[0].email,
@@ -136,6 +136,7 @@ exports.resetPass = catchAsyncErrors(async (req, res, next) => {
 // current user => api/v1/me
 exports.getCurrentUser = catchAsyncErrors(async (req, res, next) => {
   const user = await userSchema.findById(req.user._id);
+
   if (user) {
     res.status(200).json({
       success: true,
