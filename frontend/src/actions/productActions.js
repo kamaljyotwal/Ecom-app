@@ -7,7 +7,6 @@ export const getProductsAction =
     try {
       dispatch({ type: PC.ALL_PRODUCTS_REQUEST });
       let link = `/api/v1/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${rating}&page=${currentPg}`;
-
       if (category) {
         link = `/api/v1/products?keyword=${keyword}&category=${category}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${rating}&page=${currentPg}`;
       }
