@@ -75,7 +75,8 @@ exports.forgotPass = catchAsyncErrors(async (req, res, next) => {
     validateBeforeSave: false,
   });
   // const address = `${req.protocol}://${req.get("host")}/api/v1/password/reset/${tkn}`;
-  const address = `${process.env.FRONTEND_URL}/password/reset/${tkn}`;
+  const address = `${req.protocol}://${req.get("host")}/password/reset/${tkn}`;
+
   const message = `Click the link below to reset your password:`;
   const subject = `Password Reset link`;
 
