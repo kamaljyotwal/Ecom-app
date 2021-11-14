@@ -5,9 +5,9 @@ const APIFeatures = require("../utils/apiFeatures");
 
 // create new product => api/v1/admin/products/new
 exports.newProducts = catchAsyncErrors(async (req, res, next) => {
-  // req object also send user prop which contains data of signed in user so we are accesing that and assigning its _id property to poster so we don't need to provide it via postman/frontend
   req.body.poster = req.user._id;
   const prod = await productSchema.create(req.body);
+
   res.status(201).json({
     success: true,
     data: prod,
@@ -47,38 +47,6 @@ exports.getOneProduct = catchAsyncErrors(async (req, res, next) => {
   }
   res.status(200).json({ success: true, data: dataFound });
 });
-
-// update product => api/v1/admin/products/:id
-exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
-  let dataFound = await productSchema.findById(req.params.id);
-  if (!dataFound) {
-    return next(new ErrorHandler("product is not found in db", 404));
-  }
-  let dataFound1 = await productSchema.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    useFindAndModify: false,
-    runValidators: true,
-  });
-
-  res.status(200).json({
-    success: true,
-    data: dataFound1,
-  });
-});
-
-// delete product => api/v1/admin/products/:id
-exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
-  const found = await productSchema.findByIdAndDelete(req.params.id);
-  if (!found) {
-    return next(new ErrorHandler("product is not found in db", 404));
-  }
-
-  res.status(200).json({
-    success: true,
-    message: `product with id: ${req.params.id} deleted successfully`,
-  });
-});
-
 // create new review => api/v1/addReview/
 exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
   const { comment, rating, productId } = req.body;
@@ -92,6 +60,7 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
       comment: comment,
     };
     const isReviewed = product.reviews.find((i) => i.user.toString() === req.user._id.toString());
+    
     if (isReviewed) {
       product.reviews.forEach((i) => {
         if (i.user.toString() === req.user._id.toString()) {
@@ -168,4 +137,36 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
     }
   );
   res.status(200).json({ success: true });
+});
+
+// ================================================
+// update product => api/v1/admin/products/:id
+exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
+  let dataFound = await productSchema.findById(req.params.id);
+  if (!dataFound) {
+    return next(new ErrorHandler("product is not found in db", 404));
+  }
+  let dataFound1 = await productSchema.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    useFindAndModify: false,
+    runValidators: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    data: dataFound1,
+  });
+});
+
+// delete product => api/v1/admin/products/:id
+exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
+  const found = await productSchema.findByIdAndDelete(req.params.id);
+  if (!found) {
+    return next(new ErrorHandler("product is not found in db", 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    message: `product with id: ${req.params.id} deleted successfully`,
+  });
 });

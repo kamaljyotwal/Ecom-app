@@ -1,4 +1,5 @@
 const setupTokenInCookie = (user, statusCode, res) => {
+  
   // creating token
   const tkn2 = user.getJWToken();
 

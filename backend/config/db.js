@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-// currently connecting to local mongoDB
 function connectDb() {
   mongoose
     .connect(`${process.env.MONGO_ATLAS_URI}`, {

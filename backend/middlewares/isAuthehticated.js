@@ -11,10 +11,9 @@ exports.isUserAuthenticated = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Please Login first", 401));
   }
   const decoded = jwt.verify(tkn, process.env.JWT_SECRET);
-  // console.log(decoded);
-  req.user = await userSchema.findById(decoded.id);
-  // console.log(userSchema.findById(decoded.id));
 
+  req.user = await userSchema.findById(decoded.id);
+  
   if (!req.user) {
     res.status(401).send("Token problem");
   } else {

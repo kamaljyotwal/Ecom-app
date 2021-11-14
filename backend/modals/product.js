@@ -12,7 +12,7 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: [true, "please provide a product name"],
       trim: true,
-      maxLength: [5, "product name should be within 5 characters"],
+      maxLength: [7, "You can only sell product within 7 figure price"],
       default: 0.0,
     },
     description: {

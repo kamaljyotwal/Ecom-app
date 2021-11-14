@@ -40,13 +40,11 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     .select("+password");
 
   if (!user) {
-    return next(new ErrorHandler("Email doesn't exist or password is incorrect", 400));
+    return next(new ErrorHandler("Email doesn't exist", 400));
   } else if (bcrypt.compareSync(password, user.password) == false) {
     return next(new ErrorHandler("password is incorrect", 400));
   } else {
     tokenFunc(user, 200, res);
-    // const tkn = user.getJWToken();
-    // res.status(200).json({ success: true, token: tkn })
   }
 });
 
@@ -65,10 +63,10 @@ exports.forgotPass = catchAsyncErrors(async (req, res, next) => {
   const user1 = await userSchema.find({
     email: req.body.email,
   });
+
   if (user1.length == 0) {
     return next(new ErrorHandler("No user with this Email", 404));
   }
-
   const tkn = user1[0].getResetPasswordtkn();
 
   await user1[0].save({

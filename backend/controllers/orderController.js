@@ -8,7 +8,6 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
   const {
     shippingInfo,
     shippingPrice,
-    user,
     paymentInfo,
     itemsPrice,
     taxPrice,
@@ -53,6 +52,7 @@ exports.getAllOrdersByUser = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({ success: true, allOrders });
 });
 
+// ------------------------------------------------------------
 // get all orders (admin)=> api/v1/order/admin/allorders
 exports.adminAllOrders = catchAsyncErrors(async (req, res, next) => {
   const allOrders = await orderModal.find();
@@ -77,7 +77,7 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("This product is already delivered", 400));
   }
 
-  // updating the stock and invantory, invertory func. is defined below
+  // updating the stock and inventory, invertory func. is defined below
   foundProduct.orderedItems.forEach(async (i) => {
     await inventoryFunc(i.quantity, i.productId);
   });
