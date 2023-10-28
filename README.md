@@ -1,8 +1,8 @@
 # Ecommerce-app
 
-This is going to be a full stack MERN application which is a fully functional ecommerce app with login &amp; payment processing functionality.
+This is a full stack MERN application which is a fully functional ecommerce app with login &amp; payment processing functionality.
 
-## The Frontend of this project was bootstrapped with [Create React App].
+# The Frontend of this project was bootstrapped with [Create React App].
 
 ## Features
 

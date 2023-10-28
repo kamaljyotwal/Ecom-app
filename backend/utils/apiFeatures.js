@@ -7,11 +7,11 @@ class APIFeatures {
   search() {
     const keyw = this.queryStr.keyword
       ? {
-          name: {
-            $regex: this.queryStr.keyword,
-            $options: "i",
-          },
-        }
+        name: {
+          $regex: this.queryStr.keyword,
+          $options: "i",
+        },
+      }
       : {};
     this.query = this.query.find({ ...keyw });
     return this;
@@ -24,7 +24,7 @@ class APIFeatures {
     removeFields.forEach((i) => delete newStr[i]);
     let stringnew = JSON.stringify(newStr);
     let stringSec = stringnew.replace(/(gt|gte|lt|lte)/g, (match) => `$${match}`);
-
+    // console.log(stringnew)
     this.query = this.query.find(JSON.parse(stringSec));
     return this;
   }
@@ -36,5 +36,4 @@ class APIFeatures {
     return this;
   }
 }
-
 module.exports = APIFeatures;

@@ -17,7 +17,6 @@ export default function ProtectedRoute({ children, adminRoute, ...rest }) {
             if (adminRoute && user.role !== "admin") {
               return <Redirect to="/" />;
             }
-
             return children;
           }}
         />

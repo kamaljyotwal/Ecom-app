@@ -19,7 +19,7 @@ cloudinary.config({
 });
 
 const server = app.listen(process.env.PORT, () =>
-  console.log(`ecom app listening on port ${process.env.PORT} and mode is ${process.env.NODE_ENV}!`)
+  console.log(`Ecomm app listening on port ${process.env.PORT} and mode is ${process.env.NODE_ENV}!`)
 );
 
 //handling uncaught exceptions

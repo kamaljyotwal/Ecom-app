@@ -1,4 +1,4 @@
-// In this file, we are seeding mongo with the data available in local json file.
+// Here seeding mongoDB with the data available in local json file.
 require("dotenv").config({ path: "backend/config/conf.env" });
 const productData = require("../data/productData.json");
 const connectDb = require("../config/db");

@@ -102,6 +102,7 @@ export default function ProductDetails() {
         <Loader />
       ) : (
         <>
+          {console.log(product.images)}
           <CustomTitle title={product.name} />
           <div className="container container-fluid">
             <div className="product-mainDiv">

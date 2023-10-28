@@ -5,7 +5,6 @@ const errorMiddleware = require("./middlewares/error");
 var cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const path = require("path");
-// require("dotenv").config({ path: "backend/config/conf.env" });
 
 // setup for env
 if (process.env.NODE_ENV != "PRODUCTION") {
@@ -40,5 +39,4 @@ if (process.env.NODE_ENV == "PRODUCTION") {
 
 // error middleware is being used in last after routing, else not working.
 app.use(errorMiddleware);
-
 module.exports = app;
