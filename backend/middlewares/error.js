@@ -7,7 +7,7 @@ module.exports = (err, req, res, next) => {
       success: false,
       error: err,
       message: err.message,
-      stack: err.stack,
+      stack: err?.stack,
     });
   }
 
@@ -40,7 +40,7 @@ module.exports = (err, req, res, next) => {
       success: false,
       error: err,
       message: err.message,
-      stack: err.stack,
+      stack: err?.stack,
     });
   }
 };

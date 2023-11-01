@@ -22,7 +22,7 @@ const server = app.listen(process.env.PORT, () =>
   console.log(`Ecomm app listening on port ${process.env.PORT} and mode is ${process.env.NODE_ENV}!`)
 );
 
-//handling uncaught exceptions
+//Handling uncaught exceptions
 // it is working but unnecessary
 // process.on('uncaughtException', err => {
 //   console.log(`Error: ${err.stack}`);
@@ -30,7 +30,7 @@ const server = app.listen(process.env.PORT, () =>
 //   process.exit(1)
 // })
 
-// handing unhandled promise rejection
+// Handing unhandled promise rejection
 // process.on("unhandledRejection", err => {
 //   console.log(`ERROR: ${err.message}`)
 //   console.log("shutting down server due to unhandled rejection")
@@ -38,4 +38,3 @@ const server = app.listen(process.env.PORT, () =>
 //     process.exit(1)
 //   })
 // })
-// above is not working
