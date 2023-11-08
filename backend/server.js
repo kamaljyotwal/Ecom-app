@@ -8,9 +8,6 @@ if (process.env.NODE_ENV != "PRODUCTION") {
   require("dotenv").config({ path: "backend/config/conf.env" });
 }
 
-// connecting to db
-connectDb();
-
 // cloudinary setup
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -18,10 +15,13 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const server = app.listen(process.env.PORT, () =>
-  console.log(`Ecomm app listening on port ${process.env.PORT} and mode is ${process.env.NODE_ENV}!`)
-);
-
+async function serverStart(params) {
+  await connectDb();
+  const server = app.listen(process.env.PORT, () =>
+    console.log(`Ecomm app listening on port ${process.env.PORT} and mode is ${process.env.NODE_ENV}!`)
+  );
+}
+serverStart();
 //Handling uncaught exceptions
 // it is working but unnecessary
 // process.on('uncaughtException', err => {
