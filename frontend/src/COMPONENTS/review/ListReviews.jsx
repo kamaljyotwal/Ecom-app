@@ -17,7 +17,6 @@ export default function ListReviews({ reviews }) {
                 ></div>
               </div>
               <p className="review_user">by {review.name}</p>
-
               <hr />
             </div>
           ))}

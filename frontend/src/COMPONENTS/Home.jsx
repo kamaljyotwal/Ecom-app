@@ -93,7 +93,6 @@ export default function Home() {
 
                     <div>
                       <h4 className="mb-3">Categories</h4>
-
                       <ul className="pl-0">
                         {categoryArr.map((i, index) => (
                           <li

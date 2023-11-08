@@ -35,5 +35,4 @@ let initialState = {
 };
 
 const store = createStore(reducer, initialState, composeWithDevTools(applyMiddleware(thunk)));
-
 export default store;

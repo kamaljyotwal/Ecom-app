@@ -10,8 +10,10 @@ export const getProductsAction =
       if (category) {
         link = `/api/v1/products?keyword=${keyword}&category=${category}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${rating}&page=${currentPg}`;
       }
+      
 
       const { data } = await axios.get(link);
+      
       dispatch({ type: PC.ALL_PRODUCTS_SUCCESS, payload: data });
     } catch (error) {
       dispatch({ type: PC.ALL_PRODUCTS_FAIL, payload: error.message });

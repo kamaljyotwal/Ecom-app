@@ -41,7 +41,7 @@ export const loadCurrentUserAction = () => async (dispatch) => {
     dispatch({ type: AC.LOAD_USER_REQUEST });
 
     const { data } = await axios.get("/api/v1/me");
-
+    // console.log(data)
     dispatch({ type: AC.LOAD_USER_SUCCESS, payload: data.data });
   } catch (error) {
     console.log(error);

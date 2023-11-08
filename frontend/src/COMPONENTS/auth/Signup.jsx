@@ -5,7 +5,6 @@ import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { registerAction, clearErrors } from "../../actions/authAction";
 
-// url => /register
 export default function Signup() {
   const dispatch = useDispatch();
   let history = useHistory();

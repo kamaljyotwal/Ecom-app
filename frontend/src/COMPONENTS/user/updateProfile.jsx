@@ -15,11 +15,11 @@ export default function UpdateProfile() {
   const [email, setEmail] = useState("");
   const [avatar, setAvatar] = useState("");
   const [avatarPreview, setAvatarPreview] = useState("/images/default_avatar.jpg");
+  const [processing, setProcessing] = useState(false);
 
   const { user } = useSelector((state) => state.user);
   const { error, isUpdated, loading } = useSelector((state) => state.user2);
-  const [processing, setProcessing] = useState(false);
-
+  
   useEffect(() => {
     if (user && processing === false) {
       setName(user.name);
